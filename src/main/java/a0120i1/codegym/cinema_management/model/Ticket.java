@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,7 +18,8 @@ public class Ticket {
 
     private String id;
 
-    private String bookingId;
+    @ManyToOne
+    private Booking booking;
 
     @OneToOne
     private Seat seat;

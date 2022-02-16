@@ -1,5 +1,6 @@
 package a0120i1.codegym.cinema_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,13 @@ public class Theater {
 
     private Integer totalCol;
 
-    @OneToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "theater")
+    @JsonIgnore
     private List<Seat> seatList;
+
+    @OneToMany(mappedBy = "theater")
+    @JsonIgnore
+    private List<ShowTime> showTimeList;
+
+
 }

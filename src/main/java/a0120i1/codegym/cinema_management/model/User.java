@@ -1,14 +1,18 @@
 package a0120i1.codegym.cinema_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -41,4 +45,8 @@ public class User {
     @OneToOne
     @JsonIgnore
     private Account account;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    List<Booking> bookingList;
 }

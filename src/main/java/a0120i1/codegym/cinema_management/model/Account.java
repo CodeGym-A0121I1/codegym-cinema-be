@@ -1,12 +1,15 @@
 package a0120i1.codegym.cinema_management.model;
 
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
     @Id

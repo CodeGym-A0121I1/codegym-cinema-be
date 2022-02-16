@@ -1,14 +1,19 @@
 package a0120i1.codegym.cinema_management.model;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking {
 
     @Id
@@ -20,5 +25,18 @@ public class Booking {
     )
     private String id;
 
-    private
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private ShowTime showTime;
+
+    @OneToMany(mappedBy = "booking")
+    @JsonIgnore
+    private List<Ticket> ticketList;
+
+    private LocalDate date;
+    private LocalTime time;
+    private Long totalPrice;
+    private Boolean paid;
 }

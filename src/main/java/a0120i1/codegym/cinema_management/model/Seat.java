@@ -25,6 +25,6 @@ public class Seat {
     @ManyToOne
     private Theater theater;
 
-    @OneToOne
+    @OneToOne(mappedBy = "seat")
     private Ticket ticket;
 }
