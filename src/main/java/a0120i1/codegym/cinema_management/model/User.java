@@ -1,0 +1,44 @@
+package a0120i1.codegym.cinema_management.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Data
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(generator = "idUser")
+    @GenericGenerator(
+            name = "idUser",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "U"),
+            strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
+    )
+    private String id;
+    private String fullname;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private Boolean gender;
+
+    private LocalDate dayOfBirth;
+
+    private String address;
+
+    private String idCard;
+
+    private String image;
+
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
+
+    @OneToOne
+    @JsonIgnore
+    private Account account;
+}
