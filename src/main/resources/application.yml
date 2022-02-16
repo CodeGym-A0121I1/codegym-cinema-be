@@ -1,0 +1,13 @@
+
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cinema-management?createDatabaseIfNotExist=true
+    username: root
+    #    Enter password of MySQL below
+    password: password_MySQL
+
+  jpa:
+    hibernate:
+      ddl-auto: update
