@@ -1,18 +1,27 @@
 package a0120i1.codegym.cinema_management.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket {
 
     @Id
+
     private String id;
+
     private String bookingId;
-    private String chairId;
+
+    @OneToOne
+    private Seat seat;
+
     private Long price;
 
 }
