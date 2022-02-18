@@ -1,5 +1,6 @@
-package a0120i1.codegym.cinema_management.model.booking;
+package a0120i1.codegym.cinema_management.model.theater;
 
+import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

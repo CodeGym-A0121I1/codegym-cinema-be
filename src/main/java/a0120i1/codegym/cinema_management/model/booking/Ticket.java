@@ -1,5 +1,6 @@
 package a0120i1.codegym.cinema_management.model.booking;
 
+import a0120i1.codegym.cinema_management.model.theater.Seat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

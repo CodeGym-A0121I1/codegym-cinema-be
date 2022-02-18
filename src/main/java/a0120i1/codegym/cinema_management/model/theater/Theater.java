@@ -1,7 +1,5 @@
-package a0120i1.codegym.cinema_management.model.booking;
+package a0120i1.codegym.cinema_management.model.theater;
 
-import a0120i1.codegym.cinema_management.model.booking.ETypeTheater;
-import a0120i1.codegym.cinema_management.model.booking.Seat;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
