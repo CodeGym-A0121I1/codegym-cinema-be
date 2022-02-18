@@ -21,8 +21,6 @@ import java.util.List;
 public class ShowTime {
     @Id
     private String id;
-    private String movieID;
-    private String theaterID;
     private LocalTime startTime;
     private LocalDate startDate;
     private double price;
