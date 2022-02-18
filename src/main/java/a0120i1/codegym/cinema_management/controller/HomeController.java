@@ -35,7 +35,7 @@ public class HomeController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping
+    @GetMapping("home")
     public String hello() {
         return "Welcome to the Project Cinema-Management of class A0120I1";
     }
