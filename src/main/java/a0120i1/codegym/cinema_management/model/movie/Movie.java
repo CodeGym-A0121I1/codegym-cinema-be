@@ -26,8 +26,7 @@ public class Movie {
     )
     private String id;
     private String name;
-    private String poster; // imange
-    private String trailer;
+    private String poster; // imange    private String trailer;
     private String introduction; // introduce;
     private LocalDate openingDay;
     private LocalDate endDay;
