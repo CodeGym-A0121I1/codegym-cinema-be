@@ -43,8 +43,11 @@ public class Movie {
     @ManyToOne
     private Producer producer;
 
-    @ManyToOne
-    private Genre genre;
+    @ManyToMany
+    @JoinTable(name = "movie_genre",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genreList;
 
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
