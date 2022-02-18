@@ -24,7 +24,7 @@ public class User {
             strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
     )
     private String id;
-    private String fullname;
+    private String fullName;
 
     private String email;
 
