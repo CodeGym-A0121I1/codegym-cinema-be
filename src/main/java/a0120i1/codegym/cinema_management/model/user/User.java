@@ -24,13 +24,15 @@ public class User {
             strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
     )
     private String id;
+
     private String fullName;
 
     private String email;
 
     private String phoneNumber;
 
-    private Boolean gender;
+    @Enumerated(EnumType.STRING)
+    private EGender gender;
 
     private LocalDate dayOfBirth;
 
