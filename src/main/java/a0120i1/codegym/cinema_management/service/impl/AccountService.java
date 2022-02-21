@@ -20,4 +20,9 @@ public class AccountService implements IAccountService {
     public Optional<Account> getById(String username) {
         return this.accountRepository.findById(username);
     }
+
+    @Override
+    public Boolean isUsernameExists(String username) {
+        return this.accountRepository.existsByUsername(username);
+    }
 }
