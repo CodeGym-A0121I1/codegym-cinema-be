@@ -63,10 +63,11 @@ public class HomeController {
     @Autowired
     private ModelMapper modelMapper;
 
+    // password user login with Facebook & Google = passwordSocial
     private final String passwordSocial = "social_facebook_&_gooogle_u093840932%@*&^#@!*kjewhj,ncoiweq}kqw'''2132132132";
 
+    // My client ID Google in website: https://console.developers.google.com/
     private final String googleClientId = "1046534921769-0ce6sb6v97gen0mbqpgc3ct9vil3h078.apps.googleusercontent.com";
-
 
     @GetMapping("home")
     public String hello() {
@@ -88,10 +89,14 @@ public class HomeController {
         return ("Welcome EMPLOYEE");
     }
 
-    private AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
+    // parameter : username+password
+    // true -> OK -> return: token + User
+    // false -> username+password ( fail or account locked ) -> return : ERROR
+    private ResponseEntity<AuthenticationResponse> login(AuthenticationRequest authenticationRequest) {
         String jwt = null;
         UserLoginDTO userLoginDto = null;
         String status;
+        HttpStatus httpStatus;
         try {
             // Check username & password exists in database?
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -100,18 +105,26 @@ public class HomeController {
             User user = this.userService.getByUsername(authenticationRequest.getUsername());
             userLoginDto = this.modelMapper.map(user, UserLoginDTO.class);
             status = "Success";
+            httpStatus = HttpStatus.OK;
         } catch (DisabledException disabledException) {
             // Catch Var enable = false
             status = "Account locked";
+            httpStatus = HttpStatus.BAD_REQUEST;
         } catch (BadCredentialsException badCredentialsException) {
             // Catch username & password exists in database
             status = "Wrong password or username";
+            httpStatus = HttpStatus.BAD_REQUEST;
         } catch (Exception exception) {
             status = "Error server";
+            httpStatus = HttpStatus.BAD_REQUEST;
         }
-        return new AuthenticationResponse(jwt, userLoginDto, status);
+        return new ResponseEntity<>(new AuthenticationResponse(jwt, userLoginDto, status), httpStatus);
     }
 
+    // Check username exitsts,
+    // true -> get user
+    // false -> save user
+    // call login (user.username, passwordSocial)
     private ResponseEntity<AuthenticationResponse> loginSocial(String email, String fullName, String image) {
         User user = new User();
         Account account = new Account();
@@ -132,23 +145,12 @@ public class HomeController {
             user = this.userService.save(user);
         }
 
-        AuthenticationResponse authenticationResponse = login(new AuthenticationRequest(user.getAccount().getUsername(), this.passwordSocial));
-
-        if (authenticationResponse.getStatus().equals("Success")) {
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.BAD_REQUEST);
-        }
+        return login(new AuthenticationRequest(user.getAccount().getUsername(), this.passwordSocial));
     }
 
     @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> loginLocal(@RequestBody AuthenticationRequest authenticationRequest) {
-        AuthenticationResponse authenticationResponse = login(authenticationRequest);
-        if (authenticationResponse.getStatus().equals("Success")) {
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.BAD_REQUEST);
-        }
+        return login(authenticationRequest);
     }
 
     @PostMapping("/google")
@@ -184,10 +186,12 @@ public class HomeController {
         try {
             Facebook facebook = new FacebookTemplate(tokenDto.getToken());
             final String[] data = {"email", "name", "picture"};
+            // get data for parameters
             org.springframework.social.facebook.api.User userFacebook = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, data);
 
             String email = userFacebook.getEmail();
             String fullName = userFacebook.getName();
+            // get url image for Object LinkedHashmap (extra,picture,data)
             String image = ((LinkedHashMap) ((LinkedHashMap) userFacebook.getExtraData().get("picture")).get("data")).get("url").toString();
 
             return loginSocial(email, fullName, image);
