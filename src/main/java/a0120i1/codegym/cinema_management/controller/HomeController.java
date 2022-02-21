@@ -11,10 +11,12 @@ import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
 import a0120i1.codegym.cinema_management.security.util.JwtUtil;
 import a0120i1.codegym.cinema_management.service.IAccountService;
 import a0120i1.codegym.cinema_management.service.IUserService;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.common.io.BaseEncoding;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.ExpiredAuthorizationException;
+import org.springframework.social.InvalidAuthorizationException;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -149,7 +152,8 @@ public class HomeController {
     }
 
     @PostMapping("/google")
-    public ResponseEntity<AuthenticationResponse> LoginGoogle(@RequestBody TokenDTO tokenDto) throws IOException {
+    public ResponseEntity<AuthenticationResponse> LoginGoogle(@RequestBody TokenDTO tokenDto) {
+        String status;
         try {
             final NetHttpTransport transport = new NetHttpTransport();
             final JacksonFactory jacksonFactory = JacksonFactory.getDefaultInstance();
@@ -164,13 +168,19 @@ public class HomeController {
             String image = payload.get("picture").toString();
 
             return loginSocial(email, fullName, image);
+        } catch (JsonParseException | BaseEncoding.DecodingException | IllegalArgumentException invalid) {
+            status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
-            return new ResponseEntity<>(new AuthenticationResponse(null, null, "TOKEN EXPIRES"), HttpStatus.BAD_REQUEST);
+            status = "Token expires";
+        } catch (Exception e) {
+            status = "Error server";
         }
+        return new ResponseEntity<>(new AuthenticationResponse(null, null, status), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/facebook")
-    public ResponseEntity<AuthenticationResponse> loginFacebook(@RequestBody TokenDTO tokenDto) throws IOException {
+    public ResponseEntity<AuthenticationResponse> loginFacebook(@RequestBody TokenDTO tokenDto) {
+        String status;
         try {
             Facebook facebook = new FacebookTemplate(tokenDto.getToken());
             final String[] data = {"email", "name", "picture"};
@@ -181,9 +191,14 @@ public class HomeController {
             String image = ((LinkedHashMap) ((LinkedHashMap) userFacebook.getExtraData().get("picture")).get("data")).get("url").toString();
 
             return loginSocial(email, fullName, image);
-        } catch (ExpiredAuthorizationException expiredAuthorizationException) { // token_time_facebook = 1-2 hour
-            return new ResponseEntity<>(new AuthenticationResponse(null, null, "TOKEN EXPIRES"), HttpStatus.BAD_REQUEST);
+        } catch (InvalidAuthorizationException invalid) {
+            status = "Token invalid";
+        } catch (ExpiredAuthorizationException expiredAuthorizationException) {
+            status = "Token expires";
+        } catch (Exception e) {
+            status = "Error server";
         }
+        return new ResponseEntity<>(new AuthenticationResponse(null, null, status), HttpStatus.BAD_REQUEST);
     }
 
 }
