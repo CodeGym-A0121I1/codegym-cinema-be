@@ -7,8 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public interface IMovieService{
-    Movie finById(String id);
-    List<Movie> getAll();
-
+public interface IMovieService extends IService<Movie, String>{
 }

@@ -13,14 +13,23 @@ public class MovieService implements IMovieService {
     @Autowired
     private IMovieRepository movieRepository;
 
-
-    @Override
-    public Movie finById(String id) {
-        return  movieRepository.findById(id).orElse(null);
-    }
-
     @Override
     public List<Movie> getAll() {
         return movieRepository.findAll();
+    }
+
+    @Override
+    public Optional<Movie> getById(String id) {
+        return movieRepository.findById(id);
+    }
+
+    @Override
+    public Movie save(Movie entity) {
+        return this.movieRepository.save(entity);
+    }
+
+    @Override
+    public void deleteById(String id) {
+
     }
 }

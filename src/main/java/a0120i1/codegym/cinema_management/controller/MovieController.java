@@ -10,23 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/movie")
 public class MovieController {
 
-    private IMovieService movieService;
+    private final IMovieService movieService;
 
     public MovieController(IMovieService movieService) {
         this.movieService = movieService;
     }
 
 
-//     chi tiết phim
+//     chi tiết movie
     @GetMapping(value = "/{id}")
     public ResponseEntity<Movie> detailmovie(@PathVariable("id") String id) {
-        System.out.println("test xem id có vao trong nay ko nao");
-        Movie movie = this.movieService.finById(id);
-        return new ResponseEntity<>(movie, HttpStatus.OK);
+        Optional<Movie> movie = movieService.getById(id);
+        return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
