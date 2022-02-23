@@ -30,6 +30,7 @@ public class UserService implements IUserService {
     @Override
     public User save(User entity) {
         return userRepository.save(entity);
+
     }
 
     @Override
