@@ -46,7 +46,6 @@ public class User {
     private Provider provider;
 
     @OneToOne
-    @JsonIgnore
     private Account account;
 
     @OneToMany(mappedBy = "user")

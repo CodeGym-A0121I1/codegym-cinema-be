@@ -52,6 +52,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/facebook").permitAll()
                 .antMatchers("/api/admin").hasRole("ADMIN")
                 .antMatchers("/api/user").hasRole("USER")
+                .antMatchers("/api/employees").hasRole("ADMIN")
+                .antMatchers("/api/employees").hasRole("MANAGEMENT")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
