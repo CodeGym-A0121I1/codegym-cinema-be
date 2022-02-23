@@ -33,4 +33,9 @@ public class BookingService implements IBookingService {
     public void deleteById(String id) {
 
     }
+
+    @Override
+    public List<Booking> findBy(String search) {
+        return bookingRepository.findBy(search);
+    }
 }

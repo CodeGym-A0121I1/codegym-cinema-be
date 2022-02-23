@@ -29,4 +29,11 @@ public class BookingController {
         return booking.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("search")
+    public ResponseEntity<List<Booking>> findBy(@RequestParam("search") String search) {
+        System.out.println(search);
+        List<Booking> bookingList = bookingService.findBy(search);
+        return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
+    }
 }
