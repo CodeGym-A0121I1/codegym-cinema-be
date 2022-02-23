@@ -65,4 +65,9 @@ public class AccountService implements IAccountService {
     public void deleteById(String id) {
 
     }
+
+    @Override
+    public Boolean isUsernameExists(String username) {
+        return this.accountRepository.existsByUsername(username);
+    }
 }

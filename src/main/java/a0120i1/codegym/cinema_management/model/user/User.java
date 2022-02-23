@@ -24,6 +24,7 @@ public class User {
             strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
     )
     private String id;
+
     private String fullName;
 
     private String email;
@@ -44,8 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToOne
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
     @OneToMany(mappedBy = "user")

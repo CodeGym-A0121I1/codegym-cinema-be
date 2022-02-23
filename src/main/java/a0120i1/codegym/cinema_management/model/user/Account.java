@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.model.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +28,7 @@ public class Account {
     private boolean enable;
 
     @OneToOne(mappedBy = "account")
+    @JsonIgnore
     private User user;
 
     public boolean getEnable() {
