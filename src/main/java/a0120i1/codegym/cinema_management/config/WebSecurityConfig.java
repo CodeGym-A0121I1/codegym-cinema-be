@@ -20,10 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     @Bean
@@ -52,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user").hasRole("USER")
                 .antMatchers("/api/sale").hasRole("SALE")
                 .antMatchers("/api/manager").hasRole("MANAGER")
+                .antMatchers(HttpMethod.PUT,"/api/users/account/password").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

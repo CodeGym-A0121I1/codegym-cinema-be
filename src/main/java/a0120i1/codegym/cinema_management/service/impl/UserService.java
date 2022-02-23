@@ -27,7 +27,8 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User entity) {
-        return null;
+        User user = userRepository.save(entity);
+        return user;
     }
 
     @Override

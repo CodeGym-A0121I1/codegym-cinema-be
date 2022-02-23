@@ -30,7 +30,8 @@ public class User {
 
     private String phoneNumber;
 
-    private Boolean gender;
+    @Enumerated(EnumType.STRING)
+    private EGender gender;
 
     private LocalDate dayOfBirth;
 
