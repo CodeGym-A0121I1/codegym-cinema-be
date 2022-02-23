@@ -3,8 +3,12 @@ package a0120i1.codegym.cinema_management.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Properties;
 
 @Configuration
 public class BeanConfig {
@@ -17,6 +21,27 @@ public class BeanConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JavaMailSender getMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        // host & port of GOOGLE
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        // get username & password (password of application in GoogleManagement) of admin or me
+        mailSender.setUsername("trungtrongcr21@gmail.com");
+        mailSender.setPassword("ejxtbmcjvswzgiak");
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
+        javaMailProperties.put("mail.transport.protocol", "smtp");
+        javaMailProperties.put("mail.debug", "true");
+
+        mailSender.setJavaMailProperties(javaMailProperties);
+        return mailSender;
     }
 
 }
