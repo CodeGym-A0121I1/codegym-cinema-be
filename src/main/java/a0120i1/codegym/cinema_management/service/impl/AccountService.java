@@ -6,6 +6,7 @@ import a0120i1.codegym.cinema_management.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,8 +18,23 @@ public class AccountService implements IAccountService {
 
 
     @Override
+    public List<Account> getAll() {
+        return null;
+    }
+
+    @Override
     public Optional<Account> getById(String username) {
         return this.accountRepository.findById(username);
+    }
+
+    @Override
+    public Account save(Account entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(String id) {
+
     }
 
     @Override
