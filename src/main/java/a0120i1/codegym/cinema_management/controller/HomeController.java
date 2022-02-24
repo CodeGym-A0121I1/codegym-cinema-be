@@ -154,7 +154,7 @@ public class HomeController {
         return login(authenticationRequest);
     }
 
-    @PostMapping("/google")
+    @PostMapping("login/google")
     public ResponseEntity<AuthenticationResponse> LoginGoogle(@RequestBody TokenDTO tokenDto) {
         String status;
         try {
@@ -182,7 +182,7 @@ public class HomeController {
         return new ResponseEntity<>(new AuthenticationResponse(null, null, status), HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping("/facebook")
+    @PostMapping("login/facebook")
     public ResponseEntity<AuthenticationResponse> loginFacebook(@RequestBody TokenDTO tokenDto) {
         String status;
         try {
