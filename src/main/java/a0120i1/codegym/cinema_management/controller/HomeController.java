@@ -112,7 +112,6 @@ public class HomeController {
             status = "Wrong password";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
-            System.out.println(internalAuthenticationServiceException.toString());
             status = "Username not exists";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (Exception exception) {
