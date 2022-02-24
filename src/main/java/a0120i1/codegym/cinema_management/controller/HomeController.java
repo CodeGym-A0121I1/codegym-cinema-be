@@ -6,6 +6,7 @@ import a0120i1.codegym.cinema_management.dto.login.AuthenticationResponse;
 import a0120i1.codegym.cinema_management.dto.login.TokenDTO;
 import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
+import a0120i1.codegym.cinema_management.model.user.Provider;
 import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
 import a0120i1.codegym.cinema_management.security.util.JwtUtil;
@@ -124,7 +125,7 @@ public class HomeController {
     // true -> get user
     // false -> save user
     // call login (user.username, passwordSocial)
-    private ResponseEntity<AuthenticationResponse> loginSocial(String email, String fullName, String image) {
+    private ResponseEntity<AuthenticationResponse> loginSocial(String email, String fullName, String image, Provider provider) {
         User user = new User();
         Account account = new Account();
 
@@ -137,6 +138,7 @@ public class HomeController {
         user.setEmail(email);
         user.setFullName(fullName);
         user.setImage(image);
+        user.setProvider(provider);
 
         if (this.accountService.isUsernameExists(email)) {
             user = this.userService.getByUsername(email);
@@ -167,8 +169,9 @@ public class HomeController {
             String email = payload.getEmail();
             String fullName = payload.get("name").toString();
             String image = payload.get("picture").toString();
+            Provider provider = Provider.GOOGLE;
 
-            return loginSocial(email, fullName, image);
+            return loginSocial(email, fullName, image, provider);
         } catch (JsonParseException | BaseEncoding.DecodingException | IllegalArgumentException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
@@ -192,8 +195,9 @@ public class HomeController {
             String fullName = userFacebook.getName();
             // get url image for Object LinkedHashmap (extra,picture,data)
             String image = ((LinkedHashMap) ((LinkedHashMap) userFacebook.getExtraData().get("picture")).get("data")).get("url").toString();
+            Provider provider = Provider.FACEBOOK;
 
-            return loginSocial(email, fullName, image);
+            return loginSocial(email, fullName, image, provider);
         } catch (InvalidAuthorizationException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {

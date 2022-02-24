@@ -7,5 +7,5 @@ import java.util.List;
 
 @Service
 public interface IShowTimeService {
-List<ShowTime> listShowTimeByMovieID(String id);
+    List<ShowTime> listShowTimeByMovieID(String id);
 }
