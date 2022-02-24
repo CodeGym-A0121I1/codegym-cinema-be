@@ -17,12 +17,9 @@ public class MovieController {
     @Autowired
     private IMovieService movieService;
 
-    @PutMapping("/edit")
-    public ResponseEntity<Movie> editUser(@RequestBody Movie movie) {
-        Optional<Movie> currentMovie = movieService.getById(movie.getId());
-        if (!currentMovie.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(movieService.save(movie), HttpStatus.OK);
+    @PostMapping("/create")
+    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+        Movie newMovie = movieService.save(movie);
+        return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 }
