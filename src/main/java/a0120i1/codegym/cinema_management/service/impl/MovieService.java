@@ -19,8 +19,8 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Optional<Movie> getById(Integer id) {
-        return Optional.empty();
+    public Optional<Movie> getById(String id) {
+        return iMovieRepository.findById(id);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
 
     }
 }
