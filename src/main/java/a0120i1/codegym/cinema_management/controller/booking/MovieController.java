@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -27,4 +28,21 @@ public class MovieController {
         return moviesByDate.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(moviesByDate, HttpStatus.OK);
     }
 
+    @GetMapping("list")
+    public ResponseEntity<List<Movie>> findAll(){
+        List<Movie> movieList = movieService.getAll();
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Movie> deleteMovie(@PathVariable String id){
+        Optional<Movie> movie = movieService.getById(id);
+        if (!movie.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            movieService.deleteById(id);
+            return new ResponseEntity<>(movie.get(), HttpStatus.OK);
+        }
+    }
 }

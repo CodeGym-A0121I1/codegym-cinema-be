@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class MovieService implements IMovieService {
 @Autowired
@@ -18,5 +20,25 @@ public class MovieService implements IMovieService {
     @Override
     public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
         return iMovieRepository.findByDate(date);
+    }
+
+    @Override
+    public List<Movie> getAll() {
+        return iMovieRepository.findAll();
+    }
+
+    @Override
+    public Optional<Movie> getById(String id) {
+        return iMovieRepository.findById(id);
+    }
+
+    @Override
+    public Movie save(Movie entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(String id) {
+        iMovieRepository.deleteById(id);
     }
 }

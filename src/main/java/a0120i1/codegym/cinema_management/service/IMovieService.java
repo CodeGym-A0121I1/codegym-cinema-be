@@ -8,6 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public interface IMovieService {
+public interface IMovieService extends IService<Movie, String> {
     List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date);
 }
