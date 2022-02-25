@@ -44,18 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/home").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers("/api/admin").hasRole("ADMIN")
-                .antMatchers("/api/user").hasRole("USER")
-                .antMatchers("/api/sale").hasRole("SALE")
-                .antMatchers("/api/manager").hasRole("MANAGER")
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable();
+//                .authorizeRequests()
+//                .antMatchers("/api/home").permitAll()
+//                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+//                .antMatchers("/api/admin").hasRole("ADMIN")
+//                .antMatchers("/api/user").hasRole("USER")
+//                .antMatchers("/api/sale").hasRole("SALE")
+//                .antMatchers("/api/manager").hasRole("MANAGER")
+//                .antMatchers(HttpMethod.GET,"/api/statistic-movie").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
