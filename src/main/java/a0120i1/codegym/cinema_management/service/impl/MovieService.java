@@ -6,12 +6,20 @@ import a0120i1.codegym.cinema_management.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class MovieService implements IMovieService {
+
     @Autowired
     private IMovieRepository iMovieRepository;
+
+    @Override
+    public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
+        return iMovieRepository.findByDate(date);
+    }
 
     @Override
     public List<Movie> getAll() {
@@ -23,6 +31,8 @@ public class MovieService implements IMovieService {
         return iMovieRepository.findById(id);
     }
 
+
+
     @Override
     public Movie save(Movie movie) {
         return iMovieRepository.save(movie);
@@ -30,6 +40,6 @@ public class MovieService implements IMovieService {
 
     @Override
     public void deleteById(String id) {
-
+        iMovieRepository.deleteById(id);
     }
 }

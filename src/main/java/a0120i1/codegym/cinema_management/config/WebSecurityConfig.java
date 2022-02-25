@@ -12,18 +12,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     @Bean
@@ -48,10 +41,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/google").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/facebook").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
                 .antMatchers("/api/admin").hasRole("ADMIN")
                 .antMatchers("/api/user").hasRole("USER")
+                .antMatchers("/api/employee").hasRole("EMPLOYEE")
+                .antMatchers(HttpMethod.PUT,"/api/users/account/password").hasAnyRole("USER","ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/movie/all").hasRole("ADMIN")

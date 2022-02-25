@@ -1,9 +1,14 @@
 package a0120i1.codegym.cinema_management.model.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,10 +28,18 @@ public class Account {
     private boolean enable;
 
     @OneToOne(mappedBy = "account")
+    @JsonIgnore
     private User user;
 
     public boolean getEnable() {
         return this.enable;
+    }
+    public List<GrantedAuthority> getAuthorities() {
+
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+        grantedAuthorityList.add(new SimpleGrantedAuthority(role.name()));
+
+        return grantedAuthorityList;
     }
 }
 

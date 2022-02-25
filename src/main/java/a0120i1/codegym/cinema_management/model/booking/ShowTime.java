@@ -35,7 +35,6 @@ public class ShowTime {
 
     @ManyToOne
     private Movie movie;
-
     @ManyToOne
     private Theater theater;
 }
