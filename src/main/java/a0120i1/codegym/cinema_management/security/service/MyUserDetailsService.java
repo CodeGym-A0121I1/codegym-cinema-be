@@ -22,4 +22,5 @@ public class MyUserDetailsService implements UserDetailsService {
         Optional<Account> accountOptional = this.accountService.getById(username);
         return accountOptional.map(MyUserDetails::new).orElse(null);
     }
+
 }
