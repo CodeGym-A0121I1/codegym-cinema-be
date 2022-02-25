@@ -32,8 +32,8 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public Movie save(Movie entity) {
-        return null;
+    public Movie save(Movie movie) {
+        return iMovieRepository.save(movie);
     }
 
     @Override

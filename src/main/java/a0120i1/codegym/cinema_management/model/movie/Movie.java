@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.model.movie;
 
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
+import a0120i1.codegym.cinema_management.model.theater.ETypeTheater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,21 +28,32 @@ public class Movie {
     private String id;
     private String name;
     private String poster; // imange    private String trailer;
-    private String introduction; // introduce;
+    private String trailer; // introduce->trailer;
     private LocalDate openingDay;
     private LocalDate endDay;
-    private LocalTime duration; //minuteTime;
-    private String type; //version;
+    private Integer duration; //localTime->Interger;
+
+    @Enumerated(EnumType.STRING)
+    private ETypeTheater type;//version;
+
     private String content;
 
-    @ManyToOne
-    private Actor actor;
+    @ManyToMany//many-
+    @JoinTable(name = "movie_actor",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private List<Actor> actorList;
 
-    @ManyToOne
-    private Director director;
-
-    @ManyToOne
-    private Producer producer;
+    @ManyToMany
+    @JoinTable(name = "movie_director",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id"))
+    private List<Director> directorList;
+    @ManyToMany
+    @JoinTable(name = "movie_producer",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "producer_id"))
+    private List<Producer> producerList;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "movie_genre",
