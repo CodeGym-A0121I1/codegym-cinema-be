@@ -45,8 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
-    @OneToOne
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
 
     @OneToMany(mappedBy = "user")

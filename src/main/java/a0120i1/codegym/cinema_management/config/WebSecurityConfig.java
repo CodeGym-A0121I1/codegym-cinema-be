@@ -20,11 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -48,10 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/google").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/facebook").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
                 .antMatchers("/api/admin").hasRole("ADMIN")
                 .antMatchers("/api/user").hasRole("USER")
+                .antMatchers("/api/employee").hasRole("EMPLOYEE")
+                .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
