@@ -15,7 +15,7 @@ public class MovieService implements IMovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return iMovieRepository.findAll();
     }
 
     @Override
