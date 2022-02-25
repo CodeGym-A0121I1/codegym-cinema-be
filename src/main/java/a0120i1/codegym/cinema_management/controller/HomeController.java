@@ -149,6 +149,7 @@ public class HomeController {
         return login(new AuthenticationRequest(user.getAccount().getUsername(), this.passwordSocial));
     }
 
+
     @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> loginLocal(@RequestBody AuthenticationRequest authenticationRequest) {
         return login(authenticationRequest);
