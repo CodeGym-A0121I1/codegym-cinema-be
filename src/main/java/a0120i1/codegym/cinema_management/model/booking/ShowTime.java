@@ -4,11 +4,9 @@ import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -20,6 +18,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ShowTime {
     @Id
+    @GeneratedValue(generator = "idShowTime")
+    @GenericGenerator(
+            name = "idShowTime",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "ST"),
+            strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
+    )
     private String id;
     private LocalTime startTime;
     private LocalDate startDate;
@@ -31,7 +35,6 @@ public class ShowTime {
 
     @ManyToOne
     private Movie movie;
-
     @ManyToOne
     private Theater theater;
 }

@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.model.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Account {
     private boolean enable;
 
     @OneToOne(mappedBy = "account")
+    @JsonIgnore
     private User user;
 
     public boolean getEnable() {

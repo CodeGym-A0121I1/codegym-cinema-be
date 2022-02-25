@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,6 +19,12 @@ import java.util.List;
 public class Seat {
 
     @Id
+    @GeneratedValue(generator = "idSeat")
+    @GenericGenerator(
+            name = "idSeat",
+            parameters = @org.hibernate.annotations.Parameter(name = "prefix", value = "S"),
+            strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
+    )
     private String id;
 
     private String name;
