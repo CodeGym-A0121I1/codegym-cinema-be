@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
                 .antMatchers("/api/admin").hasRole("ADMIN")

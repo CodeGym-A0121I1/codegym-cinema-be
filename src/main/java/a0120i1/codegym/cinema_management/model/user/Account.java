@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -14,8 +16,10 @@ import javax.persistence.*;
 public class Account {
 
     @Id
+    @NotBlank
     private String username;
 
+    @NotBlank
     private String password;
 
     @Enumerated(EnumType.STRING)
