@@ -1,6 +1,6 @@
 package a0120i1.codegym.cinema_management.service;
 
-import a0120i1.codegym.cinema_management.dto.statisticMovieDTO.StatisticMovieDTO;
+import a0120i1.codegym.cinema_management.dto.statisticDTO.StatisticMovieDTO;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import org.springframework.stereotype.Service;
 

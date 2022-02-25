@@ -1,4 +1,4 @@
-package a0120i1.codegym.cinema_management.dto.statisticMovieDTO;
+package a0120i1.codegym.cinema_management.dto.statisticDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatisticMovieDTO {
+public class StatisticMemberDTO {
 
     private String id;
     private String name;
-    private Double price;
+//    private Integer quantity;
+    private Double totalPrice;
+//    private Integer accumulator;
 }

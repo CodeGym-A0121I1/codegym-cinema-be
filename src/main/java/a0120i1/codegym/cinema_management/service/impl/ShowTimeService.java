@@ -1,6 +1,6 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
-import a0120i1.codegym.cinema_management.dto.statisticMovieDTO.StatisticMovieDTO;
+import a0120i1.codegym.cinema_management.dto.statisticDTO.StatisticMovieDTO;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.repository.IMovieRepository;
@@ -8,9 +8,7 @@ import a0120i1.codegym.cinema_management.repository.IShowTimeRepository;
 import a0120i1.codegym.cinema_management.service.IShowTimeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ShowTimeService implements IShowTimeService {
