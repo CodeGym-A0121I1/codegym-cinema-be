@@ -5,6 +5,8 @@ import a0120i1.codegym.cinema_management.model.theater.ETypeTheater;
 import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -38,24 +40,28 @@ public class Movie {
 
     private String content;
 
-    @ManyToMany//many-
+    @ManyToMany(fetch = FetchType.EAGER)//many-
     @JoinTable(name = "movie_actor",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actorList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_director",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "director_id"))
     private List<Director> directorList;
-    @ManyToMany
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_producer",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "producer_id"))
     private List<Producer> producerList;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
