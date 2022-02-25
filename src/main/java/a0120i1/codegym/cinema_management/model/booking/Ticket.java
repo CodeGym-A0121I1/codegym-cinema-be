@@ -33,4 +33,6 @@ public class Ticket {
 
     private Long price;
 
+    private Boolean status;
+
 }

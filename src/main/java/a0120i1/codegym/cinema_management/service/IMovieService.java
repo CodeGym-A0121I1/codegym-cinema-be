@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface IMovieService extends IService<Movie, String> {
 
     List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date);
-
 }
