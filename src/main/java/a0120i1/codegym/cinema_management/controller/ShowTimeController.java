@@ -1,4 +1,4 @@
-package a0120i1.codegym.cinema_management.controller.booking;
+package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.theater.Seat;
