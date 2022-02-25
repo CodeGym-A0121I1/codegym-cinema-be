@@ -26,7 +26,7 @@ public class BookingService implements IBookingService {
 
     @Override
     public Booking save(Booking entity) {
-        return null;
+        return bookingRepository.save(entity);
     }
 
     @Override
