@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
 import a0120i1.codegym.cinema_management.model.user.Account;
+import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +29,18 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public Boolean isUsernameExists(String username) {
+        return this.accountRepository.existsByUsername(username);
+    }
+
+    @Override
     public Account save(Account entity) {
-        return null;
+        Account account = accountRepository.save(entity);
+        return account;
     }
 
     @Override
     public void deleteById(String id) {
 
-    }
-
-    @Override
-    public Boolean isUsernameExists(String username) {
-        return this.accountRepository.existsByUsername(username);
     }
 }
