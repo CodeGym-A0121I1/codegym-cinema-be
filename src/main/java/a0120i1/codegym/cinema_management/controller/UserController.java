@@ -23,13 +23,13 @@ public class UserController {
         this.accountService = accountService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUser(){
         List<User> userList = userService.getAll();
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") String id){
         Optional<User> user = userService.getById(id);
         return user.map(value -> new ResponseEntity<>(value,HttpStatus.OK))
@@ -44,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(userService.save(user),HttpStatus.OK);
     }
 
-    @PutMapping(value = "/account/password")
+    @PutMapping("/account/password")
     public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest ){
         boolean isSuccessful = this.accountService.changePassword(changePasswordRequest);
         if (isSuccessful){

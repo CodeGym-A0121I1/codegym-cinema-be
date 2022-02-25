@@ -16,16 +16,6 @@ import java.util.Optional;
 @Service
 public class AccountService implements IAccountService {
 
-//    private final IAccountRepository accountRepository;
-//
-//
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//    public AccountService(IAccountRepository accountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-//        this.accountRepository = accountRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//    }
-
     @Autowired
     private IAccountRepository accountRepository;
 
@@ -37,7 +27,7 @@ public class AccountService implements IAccountService {
     public boolean changePassword(ChangePasswordRequest changePasswordRequest) {
         Optional<Account> accountOptional = this.getById(changePasswordRequest.getUsername());
         return accountOptional.map(account -> {
-            if(passwordEncoder.matches(changePasswordRequest.getOldPassword(),account.getPassword())){
+            if (passwordEncoder.matches(changePasswordRequest.getOldPassword(), account.getPassword()) && !passwordEncoder.matches(changePasswordRequest.getNewPassword(), account.getPassword())) {
                 account.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
                 accountRepository.save(account);
                 return true;
@@ -51,24 +41,10 @@ public class AccountService implements IAccountService {
         return null;
     }
 
-    @Override
-    public List<Account> getAll() {
-        return null;
-    }
 
     @Override
     public Optional<Account> getById(String username) {
         return accountRepository.findById(username);
-    }
-
-    @Override
-    public Account save(Account entity) {
-        return null;
-    }
-
-    @Override
-    public void deleteById(String id) {
-
     }
 
     @Override

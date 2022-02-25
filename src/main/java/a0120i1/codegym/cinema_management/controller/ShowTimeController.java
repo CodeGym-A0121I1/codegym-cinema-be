@@ -18,6 +18,7 @@ public class ShowTimeController {
 
     @Autowired
     private IShowTimeService showTimeService;
+
     @Autowired
     private ISeatService seatService;
 
