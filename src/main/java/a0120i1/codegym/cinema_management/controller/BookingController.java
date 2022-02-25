@@ -30,6 +30,14 @@ public class BookingController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //  thêm mới booking
+    @PostMapping("/create")
+    public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
+        System.out.println(booking);
+        System.out.println("test xem sao");
+        return ResponseEntity.ok(bookingService.save(booking));
+    }
+
     @GetMapping("search")
     public ResponseEntity<List<Booking>> findBy(@RequestParam("search") String search) {
         System.out.println(search);
