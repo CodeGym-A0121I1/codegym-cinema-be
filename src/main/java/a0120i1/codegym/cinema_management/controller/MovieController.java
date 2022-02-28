@@ -24,32 +24,6 @@ public class MovieController {
     @Autowired
     private IMovieService movieService;
 
-    @GetMapping
-    public ResponseEntity<List<Movie>> getMovieByDateSelected(@RequestParam("date") String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        List<Movie> moviesByDate = movieService.findMovieByOpeningDayBetweenAndEndDay2(localDate);
-        return moviesByDate.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(moviesByDate, HttpStatus.OK);
-    }
-
-    @GetMapping("list")
-    public ResponseEntity<List<Movie>> findAll(){
-        List<Movie> movieList = movieService.getAll();
-        return new ResponseEntity<>(movieList, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Movie> deleteMovie(@PathVariable String id){
-        Optional<Movie> movie = movieService.getById(id);
-        if (!movie.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
-            movieService.deleteById(id);
-            return new ResponseEntity<>(movie.get(), HttpStatus.OK);
-        }
-    }
-
     @PutMapping("/edit")
     public ResponseEntity<Movie> editUser(@RequestBody Movie movie) {
         Optional<Movie> currentMovie = movieService.getById(movie.getId());
@@ -64,16 +38,7 @@ public class MovieController {
         Movie newMovie = movieService.save(movie);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Movie> detailmovie(@PathVariable("id") String id) {
-        Optional<Movie> movie = movieService.getById(id);
-        return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Movie>> getAll() {
-       List<Movie> movieList= movieService.getAll();
-        return new ResponseEntity<>(movieList,HttpStatus.OK);
-    }
+
+
 }
