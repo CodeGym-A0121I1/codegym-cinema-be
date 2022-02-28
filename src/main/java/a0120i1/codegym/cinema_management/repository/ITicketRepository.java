@@ -12,4 +12,9 @@ import java.util.List;
 public interface ITicketRepository extends JpaRepository<Ticket, String> {
     @Query("select t from Ticket as t where t.booking.id = :id")
     List<Ticket> ticketByBooking(@Param("id") String id);
+
+    @Query(value = "select sum(price) as totalMoney " +
+            "from ticket group by booking_id " +
+            "having booking_id = :id", nativeQuery = true)
+    float bookingToTalMoney(@Param("id") String id);
 }

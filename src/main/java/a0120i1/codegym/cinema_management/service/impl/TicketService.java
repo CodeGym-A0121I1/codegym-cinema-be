@@ -35,7 +35,12 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<Ticket> ticketByBooking(String id){
+    public List<Ticket> ticketByBooking(String id) {
         return ticketRepository.ticketByBooking(id);
+    }
+
+    @Override
+    public float bookingToTalMoney(String id) {
+        return ticketRepository.bookingToTalMoney(id);
     }
 }
