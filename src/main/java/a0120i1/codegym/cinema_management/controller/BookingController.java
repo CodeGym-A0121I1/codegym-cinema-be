@@ -2,6 +2,7 @@ package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
 import a0120i1.codegym.cinema_management.service.IBookingService;
+import a0120i1.codegym.cinema_management.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class BookingController {
     @Autowired
     private IBookingService bookingService;
+    @Autowired
+    private ITicketService ticketService;
 
     @GetMapping()
     public ResponseEntity<List<Booking>> finall() {
@@ -32,8 +35,13 @@ public class BookingController {
 
     @GetMapping("search")
     public ResponseEntity<List<Booking>> findBy(@RequestParam("search") String search) {
-        System.out.println(search);
         List<Booking> bookingList = bookingService.findBy(search);
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
+    }
+
+    @GetMapping("total-money/{id}")
+    public ResponseEntity<Float> bookingTotal(@PathVariable("id") String id) {
+        float total = ticketService.bookingToTalMoney(id);
+        return new ResponseEntity<>(total, HttpStatus.OK);
     }
 }
