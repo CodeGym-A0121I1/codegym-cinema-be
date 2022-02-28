@@ -2,13 +2,15 @@ package a0120i1.codegym.cinema_management.model.movie;
 
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.theater.ETypeTheater;
+import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -38,18 +40,21 @@ public class Movie {
 
     private String content;
 
-    @ManyToMany//many-
+    @ManyToMany(fetch = FetchType.EAGER)//many-
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_actor",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actorList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_director",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "director_id"))
     private List<Director> directorList;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_producer",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "producer_id"))
@@ -64,4 +69,8 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
     private List<ShowTime> showTimeList;
+
+    @OneToMany(mappedBy = "movie")
+    @JsonIgnore
+    private List<Theater> theaterList;
 }

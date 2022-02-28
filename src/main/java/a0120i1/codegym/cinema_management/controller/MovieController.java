@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 import java.util.Optional;
+
 @RestController
 @CrossOrigin
 @RequestMapping("api/movie")
@@ -69,5 +69,11 @@ public class MovieController {
         Optional<Movie> movie = movieService.getById(id);
         return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Movie>> getAll() {
+       List<Movie> movieList= movieService.getAll();
+        return new ResponseEntity<>(movieList,HttpStatus.OK);
     }
 }
