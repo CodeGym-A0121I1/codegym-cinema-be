@@ -6,14 +6,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking, String> {
 
-    @Query(value = "SELECT SUM(total_price) FROM booking WHERE user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT SUM(total_price) " +
+            "FROM booking " +
+            "WHERE user_id = :userId " +
+            "ORDER BY SUM(total_price) DESC;", nativeQuery = true)
     Double sumPriceByUserId(@Param("userId") String userId);
 
-//    @Query(value = "", nativeQuery = true)
-//    Integer count
+    @Query(value = "SELECT SUM(quantity) " +
+            "FROM booking " +
+            "WHERE user_id = :userId " +
+            "ORDER BY SUM(quantity) DESC;", nativeQuery = true)
+    Integer countQuantity(@Param("userId") String userId);
 }

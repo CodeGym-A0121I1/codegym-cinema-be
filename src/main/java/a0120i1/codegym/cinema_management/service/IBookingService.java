@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface IBookingService extends IService<Booking, String> {
+
     List<StatisticMemberDTO> statisticTopMemberByTotalPrice();
-    List<StatisticMemberDTO> statisticTopMemberByQuantity();
-    List<StatisticMemberDTO> statisticTopMemberByAccumulator();
+
 }

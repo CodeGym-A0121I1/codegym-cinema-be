@@ -36,20 +36,10 @@ public class ShowTimeController {
         return new ResponseEntity<>(statisticMovieDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/member-quantity")
+    @GetMapping("/member")
     public ResponseEntity<List<StatisticMemberDTO>> showTopMemberByQuantity() {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/member-price")
-    public ResponseEntity<List<StatisticMemberDTO>> showTopMemberByTotalPrice() {
         List<StatisticMemberDTO> statisticMemberDTOList = this.bookingService.statisticTopMemberByTotalPrice();
         return new ResponseEntity<>(statisticMemberDTOList, HttpStatus.OK);
-    }
-
-    @GetMapping("/member-accumulator")
-    public ResponseEntity<List<StatisticMemberDTO>> showTopMemberByAccumulator() {
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

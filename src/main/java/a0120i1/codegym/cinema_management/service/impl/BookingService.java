@@ -4,12 +4,12 @@ import a0120i1.codegym.cinema_management.dto.statisticDTO.StatisticMemberDTO;
 import a0120i1.codegym.cinema_management.model.booking.Booking;
 import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IBookingRepository;
-import a0120i1.codegym.cinema_management.repository.IShowTimeRepository;
 import a0120i1.codegym.cinema_management.repository.IUserRepository;
 import a0120i1.codegym.cinema_management.service.IBookingService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,36 +17,11 @@ import java.util.Optional;
 public class BookingService implements IBookingService {
 
     private final IBookingRepository bookingRepository;
-    private final IShowTimeRepository showTimeRepository;
     private final IUserRepository userRepository;
 
-    public BookingService(IBookingRepository bookingService, IShowTimeRepository showTimeRepository, IUserRepository userService) {
+    public BookingService(IBookingRepository bookingService, IUserRepository userService) {
         this.bookingRepository = bookingService;
-        this.showTimeRepository = showTimeRepository;
         this.userRepository = userService;
-    }
-
-    @Override
-    public List<StatisticMemberDTO> statisticTopMemberByTotalPrice() {
-        List<User> userList = this.userRepository.findAll();
-        List<StatisticMemberDTO> statisticMemberDTOList = new ArrayList<>();
-        for (User user : userList) {
-            Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
-            System.out.printf("Tổng tiền của thành viên " + user.getFullName() + " là %6.2f", totalPrice);
-//            String quantit
-            statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(), user.getFullName(), totalPrice));
-        }
-        return statisticMemberDTOList;
-    }
-
-    @Override
-    public List<StatisticMemberDTO> statisticTopMemberByQuantity() {
-        return null;
-    }
-
-    @Override
-    public List<StatisticMemberDTO> statisticTopMemberByAccumulator() {
-        return null;
     }
 
     @Override
@@ -67,5 +42,18 @@ public class BookingService implements IBookingService {
     @Override
     public void deleteById(String id) {
         this.bookingRepository.deleteById(id);
+    }
+
+    @Override
+    public List<StatisticMemberDTO> statisticTopMemberByTotalPrice() {
+        List<User> userList = this.userRepository.findAll();
+        List<StatisticMemberDTO> statisticMemberDTOList = new ArrayList<>();
+        for (User user : userList) {
+            Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
+            Integer quantity = this.bookingRepository.countQuantity(user.getId());
+            statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(), user.getFullName(), quantity, totalPrice));
+        }
+        Collections.sort(statisticMemberDTOList);
+        return statisticMemberDTOList;
     }
 }

@@ -47,9 +47,10 @@ public class ShowTimeService implements IShowTimeService {
         List<StatisticMovieDTO> statisticMovieDTOList = new ArrayList<>();
         for (Movie movie : movieList) {
             Double price = this.showTimeRepository.sumPriceByMovieId(movie.getId());
-            System.out.printf("Tổng doanh thu của phim " + movie.getName() + " là: %.3fVND\n", price);
-            statisticMovieDTOList.add(new StatisticMovieDTO(movie.getId(), movie.getName(), price));
+            Integer quantity = this.showTimeRepository.sumTicketQuantityByMovieId(movie.getId());
+            statisticMovieDTOList.add(new StatisticMovieDTO(movie.getName(), quantity, price));
         }
+        Collections.sort(statisticMovieDTOList);
         return statisticMovieDTOList;
     }
 }
