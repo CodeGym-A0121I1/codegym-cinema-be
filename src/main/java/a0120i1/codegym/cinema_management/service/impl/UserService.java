@@ -3,9 +3,9 @@ package a0120i1.codegym.cinema_management.service.impl;
 import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.repository.IUserRepository;
-import a0120i1.codegym.cinema_management.service.IAccountService;
 import a0120i1.codegym.cinema_management.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +20,9 @@ public class UserService implements IUserService {
     @Autowired
     private IAccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public List<User> getAll() {
         return this.userRepository.findAll();
@@ -32,6 +35,7 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User user) {
+        user.getAccount().setPassword(passwordEncoder.encode(user.getAccount().getPassword()));
         return this.userRepository.save(user);
     }
 

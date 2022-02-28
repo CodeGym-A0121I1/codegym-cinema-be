@@ -1,10 +1,11 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
 import a0120i1.codegym.cinema_management.model.user.Account;
-import a0120i1.codegym.cinema_management.model.user.User;
+
 import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +18,14 @@ public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public List<Account> getAll() {
         return null;
+
     }
 
     @Override
@@ -33,14 +38,15 @@ public class AccountService implements IAccountService {
         return this.accountRepository.existsByUsername(username);
     }
 
+
     @Override
     public Account save(Account entity) {
-        Account account = accountRepository.save(entity);
-        return account;
+        return null;
     }
 
     @Override
     public void deleteById(String id) {
 
     }
+
 }

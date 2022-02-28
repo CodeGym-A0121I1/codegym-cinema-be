@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface IUserRepository extends JpaRepository<User, String> {
     User findByAccount_Username(String username);
 
-//    @Query(value = "update account set password = `a` where username = :name",nativeQuery = true)
+
 
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface IAccountService extends IService<Account, String> {
 
     Boolean isUsernameExists(String username);
+
+
 }

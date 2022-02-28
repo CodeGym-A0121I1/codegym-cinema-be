@@ -43,12 +43,12 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateMember(@RequestBody User user){
+    public ResponseEntity<User> updateMember(@RequestBody User user) {
         Optional<User> currentUser = userService.getById(user.getId());
-        if (!currentUser.isPresent()){
+        if (!currentUser.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(userService.save(user),HttpStatus.OK);
+        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }
 
 
