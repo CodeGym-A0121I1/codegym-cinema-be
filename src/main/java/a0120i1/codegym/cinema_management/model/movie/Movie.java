@@ -2,6 +2,7 @@ package a0120i1.codegym.cinema_management.model.movie;
 
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.theater.ETypeTheater;
+import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -68,4 +69,8 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
     private List<ShowTime> showTimeList;
+
+    @OneToMany(mappedBy = "movie")
+    @JsonIgnore
+    private List<Theater> theaterList;
 }
