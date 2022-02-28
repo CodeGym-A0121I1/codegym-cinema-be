@@ -1,6 +1,5 @@
 package a0120i1.codegym.cinema_management.dto.login;
 
-import a0120i1.codegym.cinema_management.dto.UserLoginDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationResponse {
+public class AccountLoginDTO {
 
-    private String jwt;
-    private UserLoginDTO user;
-    private String status;
+    private String username;
+    private String role;
 
 }

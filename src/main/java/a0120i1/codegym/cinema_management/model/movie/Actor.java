@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Actor {
 
     private String name;
 
-    @OneToMany(mappedBy = "actor")
+    @ManyToMany(mappedBy = "actorList")
     @JsonIgnore
     private List<Movie> movieList;
 
