@@ -1,4 +1,4 @@
-package a0120i1.codegym.cinema_management.dto;
+package a0120i1.codegym.cinema_management.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

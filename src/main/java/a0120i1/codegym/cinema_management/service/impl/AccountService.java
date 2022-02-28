@@ -1,6 +1,6 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
-import a0120i1.codegym.cinema_management.dto.ChangePasswordRequest;
+import a0120i1.codegym.cinema_management.dto.user.ChangePasswordRequest;
 import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.service.IAccountService;
@@ -48,8 +48,8 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Account save(Account entity) {
-        return null;
+    public Account save(Account account) {
+        return this.accountRepository.save(account);
     }
 
     @Override
@@ -58,7 +58,23 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Boolean isUsernameExists(String username) {
+    public Boolean existsByUsername(String username) {
         return this.accountRepository.existsByUsername(username);
+    }
+
+    @Override
+    public Boolean getEnableByUsername(String username) {
+        return this.accountRepository.getEnableByUsername(username);
+    }
+
+    @Override
+    public Boolean sendOtpToEmail() {
+        return null;
+    }
+
+    @Override
+    public Boolean forgotPassword() {
+
+        return null;
     }
 }

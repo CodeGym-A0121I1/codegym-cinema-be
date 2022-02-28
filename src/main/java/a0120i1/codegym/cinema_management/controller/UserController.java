@@ -1,19 +1,20 @@
 package a0120i1.codegym.cinema_management.controller;
 
+import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.User;
+import a0120i1.codegym.cinema_management.security.service.OtpService;
 import a0120i1.codegym.cinema_management.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import a0120i1.codegym.cinema_management.dto.ChangePasswordRequest;
+import a0120i1.codegym.cinema_management.dto.user.ChangePasswordRequest;
 import a0120i1.codegym.cinema_management.service.impl.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/api/users")
@@ -68,4 +69,49 @@ public class UserController {
             return ResponseEntity.badRequest().body(false);
         }
     }
+
+    @Autowired
+    private OtpService otpService;
+
+    private String otp;
+
+    @GetMapping("account/generate/{username}")
+    public ResponseEntity<Boolean> generateOtp(@PathVariable("username") String username) {
+
+        Optional<Account> accountOptional = this.accountService.getById(username);
+
+        //return:
+        // true -> ok
+        // false -> Account locked
+        // null -> Username not exists
+
+        return accountOptional.map(account -> {
+            if (account.getEnable()) {
+                this.otp = this.otpService.generateOTP();
+//               step sendMail(otp)
+                System.out.println(this.otp);
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+        }).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.OK));
+    }
+
+    @GetMapping("account/forgot-password/{username}/{newPassword}/{otp}")
+    public ResponseEntity<Boolean> forgotPassword(@PathVariable("username") String username,
+                                                  @PathVariable("newPassword") String newPassword,
+                                                  @PathVariable("otp") String otp) {
+        Optional<Account> accountOptional = this.accountService.getById(username);
+
+        return accountOptional.map(account -> {
+            if (otp.equals(this.otp)) {
+                account.setPassword(this.passwordEncoder.encode(newPassword));
+                this.accountService.save(account);
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+        }).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.OK));
+    }
+
 }

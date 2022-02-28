@@ -1,6 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
-import a0120i1.codegym.cinema_management.dto.UserLoginDTO;
+import a0120i1.codegym.cinema_management.dto.login.UserLoginDTO;
 import a0120i1.codegym.cinema_management.dto.login.AuthenticationRequest;
 import a0120i1.codegym.cinema_management.dto.login.AuthenticationResponse;
 import a0120i1.codegym.cinema_management.dto.login.TokenDTO;
@@ -140,7 +140,7 @@ public class HomeController {
         user.setImage(image);
         user.setProvider(provider);
 
-        if (this.accountService.isUsernameExists(email)) {
+        if (this.accountService.existsByUsername(email)) {
             user = this.userService.getByUsername(email);
         } else {
             user = this.userService.save(user);
