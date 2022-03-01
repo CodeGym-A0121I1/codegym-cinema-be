@@ -13,15 +13,19 @@ import com.google.common.cache.CacheLoader;
 @Service
 public class OtpService {
 
+    public String generateOTP() {
+        return RandomStringUtils.randomAlphabetic(6);
+    }
+
+//
 //    //cache based on username and OPT MAX 8
 //    private static final Integer EXPIRE_MINS = 5;
 //
-//    private LoadingCache<String, Integer> otpCache;
+//    private final LoadingCache<String, Integer> otpCache;
 //
 //    public OtpService() {
 //        super();
-//        otpCache = CacheBuilder.newBuilder().
-//                expireAfterWrite(EXPIRE_MINS, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
+//        otpCache = CacheBuilder.newBuilder().expireAfterWrite(EXPIRE_MINS, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
 //            public Integer load(String key) {
 //                return 0;
 //            }
@@ -52,9 +56,4 @@ public class OtpService {
 //        otpCache.invalidate(key);
 //    }
 
-
-
-    public String generateOTP() {
-        return RandomStringUtils.randomAlphabetic(6);
-    }
 }

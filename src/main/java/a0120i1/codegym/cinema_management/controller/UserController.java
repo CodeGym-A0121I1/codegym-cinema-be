@@ -30,6 +30,11 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private OtpService otpService;
+
+    private String otp;
+
     @PostMapping("/register")
     public User register(@RequestBody User user) {
         user.getAccount().setPassword(passwordEncoder.encode(user.getAccount().getPassword()));
@@ -70,11 +75,6 @@ public class UserController {
         }
     }
 
-    @Autowired
-    private OtpService otpService;
-
-    private String otp;
-
     @GetMapping("account/generate/{username}")
     public ResponseEntity<Boolean> generateOtp(@PathVariable("username") String username) {
 
@@ -88,8 +88,12 @@ public class UserController {
         return accountOptional.map(account -> {
             if (account.getEnable()) {
                 this.otp = this.otpService.generateOTP();
-//               step sendMail(otp)
-                System.out.println(this.otp);
+                try {
+                    this.accountService.sendOtpToEmail("votrungtrongqn99@gmail.com", otp);
+
+                } catch (Exception e) {
+                    throw e;
+                }
                 return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(false, HttpStatus.OK);

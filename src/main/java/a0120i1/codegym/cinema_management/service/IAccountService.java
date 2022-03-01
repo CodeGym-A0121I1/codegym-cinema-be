@@ -11,10 +11,6 @@ public interface IAccountService extends IService<Account, String> {
 
     Boolean existsByUsername(String username);
 
-    Boolean forgotPassword();
-
-    Boolean getEnableByUsername(String username);
-
-    Boolean sendOtpToEmail();
+    Boolean sendOtpToEmail(String toEmail, String otp);
 
 }

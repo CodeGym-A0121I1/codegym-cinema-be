@@ -208,5 +208,4 @@ public class HomeController {
         }
         return new ResponseEntity<>(new AuthenticationResponse(null, null, status), HttpStatus.BAD_REQUEST);
     }
-
 }
