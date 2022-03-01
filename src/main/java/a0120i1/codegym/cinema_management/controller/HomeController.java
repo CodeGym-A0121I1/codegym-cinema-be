@@ -125,11 +125,11 @@ public class HomeController {
     // true -> get user
     // false -> save user
     // call login (user.username, passwordSocial)
-    private ResponseEntity<AuthenticationResponse> loginSocial(String email, String fullName, String image, Provider provider) {
+    private ResponseEntity<AuthenticationResponse> loginSocial(String username, String email, String fullName, String image, Provider provider) {
         User user = new User();
         Account account = new Account();
 
-        account.setUsername(email);
+        account.setUsername(username);
         account.setPassword(this.passwordEncoder.encode(this.passwordSocial));
         account.setRole(ERole.ROLE_USER);
         account.setEnable(true);
@@ -140,8 +140,8 @@ public class HomeController {
         user.setImage(image);
         user.setProvider(provider);
 
-        if (this.accountService.existsByUsername(email)) {
-            user = this.userService.getByUsername(email);
+        if (this.accountService.existsByUsername(username)) {
+            user = this.userService.getByUsername(username);
         } else {
             user = this.userService.save(user);
         }
@@ -168,11 +168,12 @@ public class HomeController {
             final GoogleIdToken.Payload payload = googleIdToken.getPayload(); // data user
 
             String email = payload.getEmail();
+            String username = "GOOGLE" + email;
             String fullName = payload.get("name").toString();
             String image = payload.get("picture").toString();
             Provider provider = Provider.GOOGLE;
 
-            return loginSocial(email, fullName, image, provider);
+            return loginSocial(username, email, fullName, image, provider);
         } catch (JsonParseException | BaseEncoding.DecodingException | IllegalArgumentException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
@@ -193,12 +194,13 @@ public class HomeController {
             org.springframework.social.facebook.api.User userFacebook = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, data);
 
             String email = userFacebook.getEmail();
+            String username = "FACEBOOK" + email;
             String fullName = userFacebook.getName();
             // get url image for Object LinkedHashmap (extra,picture,data)
             String image = ((LinkedHashMap) ((LinkedHashMap) userFacebook.getExtraData().get("picture")).get("data")).get("url").toString();
             Provider provider = Provider.FACEBOOK;
 
-            return loginSocial(email, fullName, image, provider);
+            return loginSocial(username, email, fullName, image, provider);
         } catch (InvalidAuthorizationException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
