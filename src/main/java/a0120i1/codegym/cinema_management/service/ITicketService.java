@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface ITicketService extends IService<Ticket, String> {
     List<Ticket> ticketByBooking(String id);
+
+    float bookingToTalMoney(String id);
 }

@@ -41,6 +41,7 @@ public class Movie {
     private String content;
 
     @ManyToMany(fetch = FetchType.EAGER)//many-
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "movie_actor",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id"))
