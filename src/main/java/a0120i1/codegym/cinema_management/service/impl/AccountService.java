@@ -80,7 +80,7 @@ public class AccountService implements IAccountService {
             helper.setText("<h3>Xin chao ! </h3>" +
                     "<p>Vui long khong chia se ma nay cho bat ky ai.</p>" +
                     "<p>Ma OTP cua ban la: <span style='color: blue; font-size: x-large'>" + otp + "</span></p>" +
-                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>nhan vao day</a></p>", true
+                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>", true
             );
             System.out.println("Send OTP to mail success !!!");
             this.javaMailSender.send(message);
