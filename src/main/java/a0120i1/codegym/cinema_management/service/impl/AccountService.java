@@ -82,8 +82,8 @@ public class AccountService implements IAccountService {
                     "<p>Ma OTP cua ban la: <span style='color: blue; font-size: x-large'>" + otp + "</span></p>" +
                     "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>", true
             );
-            System.out.println("Send OTP to mail success !!!");
             this.javaMailSender.send(message);
+            System.out.println("Send OTP to mail success !!!");
             return true;
         } catch (Exception e) {
             return false;
