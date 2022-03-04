@@ -86,6 +86,7 @@ public class AccountService implements IAccountService {
             System.out.println("Send OTP to mail success !!!");
             return true;
         } catch (Exception e) {
+            System.out.println("Send OTP to mail fail !");
             return false;
         }
     }
