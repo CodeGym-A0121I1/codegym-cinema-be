@@ -39,16 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/home").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/home").permitAll() // test
                 .antMatchers(HttpMethod.POST, "/api/login/**").permitAll()
-                .antMatchers("/api/admin").hasRole("ADMIN")
-                .antMatchers("/api/user").hasRole("USER")
-                .antMatchers("/api/employee").hasRole("EMPLOYEE")
-                .antMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                .antMatchers(HttpMethod.PUT,"/api/users/account/password").hasAnyRole("USER","ADMIN","EMPLOYEE")
-                .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET,"/api/movie/all").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/admin").hasRole("ADMIN") // test
+                .antMatchers(HttpMethod.GET,"/api/user").hasRole("USER") //test
+                .antMatchers(HttpMethod.GET,"/api/employee").hasRole("EMPLOYEE") //test
                 .antMatchers(HttpMethod.GET,"/api/users/account/generate/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/users/account/forgot-password").permitAll()
                 .anyRequest().authenticated()
