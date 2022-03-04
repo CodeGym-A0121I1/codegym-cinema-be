@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/booking/**").hasAnyRole("ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.GET,"/api/booking/search").hasAnyRole("ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.GET,"/api/users/account/generate/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/users/account/forgot-password/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/users/account/forgot-password").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
