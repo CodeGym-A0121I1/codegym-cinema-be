@@ -7,8 +7,6 @@ import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.security.service.OtpService;
 import a0120i1.codegym.cinema_management.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import a0120i1.codegym.cinema_management.dto.user.ChangePasswordRequest;
@@ -45,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUser() {
+    public ResponseEntity<List<User>> getAllUser() {
         List<User> userList = userService.getAll();
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
