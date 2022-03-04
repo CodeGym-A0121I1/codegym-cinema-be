@@ -2,6 +2,7 @@ package a0120i1.codegym.cinema_management.config;
 
 import a0120i1.codegym.cinema_management.security.filter.JwtRequestFilter;
 import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -52,6 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user").hasRole("USER")
                 .antMatchers("/api/sale").hasRole("SALE")
                 .antMatchers("/api/manager").hasRole("MANAGER")
+                .antMatchers( HttpMethod.GET,"/api/movie").permitAll()
+                .antMatchers( HttpMethod.GET,"/api/movie/genre").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

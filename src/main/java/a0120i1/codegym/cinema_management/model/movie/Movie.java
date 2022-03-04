@@ -25,17 +25,32 @@ public class Movie {
             strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
     )
     private String id;
+
     private String name;
-    private String poster; // imange    private String trailer;
-    private String introduction; // introduce;
+
+    private String poster;
+
+    private String trailer;
+
+    private String introduction;
+
     private LocalDate openingDay;
+
     private LocalDate endDay;
-    private LocalTime duration; //minuteTime;
-    private String type; //version;
+
+    private LocalTime duration;
+
+    private String type;
+
     private String content;
 
-    @ManyToOne
-    private Actor actor;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actor",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private List<Actor> actorList;
 
     @ManyToOne
     private Director director;

@@ -23,6 +23,8 @@ public class Producer {
 
     private String name;
 
+    private String image;
+
     @OneToMany(mappedBy = "producer")
     @JsonIgnore
     private List<Movie> movieList;
