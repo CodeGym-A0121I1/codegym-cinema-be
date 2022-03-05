@@ -40,11 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/api/home").permitAll() // test
-                .antMatchers(HttpMethod.POST, "/api/login/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/admin").hasRole("ADMIN") // test
                 .antMatchers(HttpMethod.GET,"/api/user").hasRole("USER") //test
                 .antMatchers(HttpMethod.GET,"/api/employee").hasRole("EMPLOYEE") //test
-                .antMatchers(HttpMethod.GET,"/api/users/account/generate/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/users/account/generate-otp/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/users/account/forgot-password").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
