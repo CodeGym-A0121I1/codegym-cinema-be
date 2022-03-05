@@ -8,6 +8,7 @@ import a0120i1.codegym.cinema_management.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,34 +16,41 @@ import java.util.Optional;
 public class MovieService implements IMovieService {
 
     @Autowired
-    private IMovieRepository movieRepository;
+    private IMovieRepository iMovieRepository;
 
     @Autowired
     private IGenreRepository genreRepository;
 
     @Override
+    public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
+        return iMovieRepository.findByDate(date);
+    }
+
+    @Override
     public List<Movie> getAll() {
-        return movieRepository.findAll();
+        return iMovieRepository.findAll();
     }
 
     @Override
     public Optional<Movie> getById(String id) {
-        return Optional.empty();
+        return iMovieRepository.findById(id);
     }
 
+
+
     @Override
-    public Movie save(Movie entity) {
-        return null;
+    public Movie save(Movie movie) {
+        return iMovieRepository.save(movie);
     }
 
     @Override
     public void deleteById(String id) {
-
+        iMovieRepository.deleteById(id);
     }
 
     @Override
     public List<Movie> getAllMovieByName(String name) {
-        return movieRepository.findAllByNameContains(name);
+        return iMovieRepository.findAllByNameContains(name);
     }
 
     @Override

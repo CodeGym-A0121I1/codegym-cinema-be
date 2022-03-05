@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationResponse {
+public class AccountLoginDTO {
 
-    private String jwt;
-    private UserLoginDTO user;
-    private String status;
+    private String username;
+    private String role;
 
 }
