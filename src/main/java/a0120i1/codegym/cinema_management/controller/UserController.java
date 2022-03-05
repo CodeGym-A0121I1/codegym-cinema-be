@@ -84,7 +84,6 @@ public class UserController {
                 String otp = this.otpService.generateOTP(username);
                 boolean isSendOtp = this.accountService.sendOtpToEmail(account.getUser().getEmail(), otp);
                 if (isSendOtp) {
-                    System.out.println(otp);
                     return new ResponseEntity<>(true, HttpStatus.OK);// Send mail success
                 } else  {
                     return new ResponseEntity<>(false, HttpStatus.OK);  // Send mail fail
