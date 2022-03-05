@@ -8,13 +8,16 @@ import a0120i1.codegym.cinema_management.model.movie.Producer;
 import a0120i1.codegym.cinema_management.model.theater.ETypeTheater;
 import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovieDTO {
     private String id;
     private String name;

@@ -1,5 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
+import a0120i1.codegym.cinema_management.model.movie.Genre;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.service.IMovieService;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class MovieController {
 
     @Autowired
     private IMovieService movieService;
+
 
     @GetMapping
     public ResponseEntity<List<Movie>> getMovieByDateSelected(@RequestParam("date") String date) {
@@ -60,9 +62,12 @@ public class MovieController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+    public ResponseEntity<Boolean> createMovie(@RequestBody Movie movie) {
         Movie newMovie = movieService.save(movie);
-        return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
+        if (newMovie == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
     @GetMapping(value = "/{id}")
     public ResponseEntity<Movie> detailmovie(@PathVariable("id") String id) {
@@ -75,5 +80,11 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getAll() {
        List<Movie> movieList= movieService.getAll();
         return new ResponseEntity<>(movieList,HttpStatus.OK);
+    }
+
+    @GetMapping("/all/genre")
+    public ResponseEntity<List<Genre>> getAllGenre() {
+        List<Genre> genreList= movieService.getAllGenre();
+        return new ResponseEntity<>(genreList,HttpStatus.OK);
     }
 }

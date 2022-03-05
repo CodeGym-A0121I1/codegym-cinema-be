@@ -1,10 +1,13 @@
 package a0120i1.codegym.cinema_management.dto.movie;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShowTimeDTO {
     private String id;
     private LocalTime startTime;
