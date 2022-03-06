@@ -20,4 +20,9 @@ public class SeatService implements ISeatService {
     public List<Seat> findAllSeatBookedInTheater(String theater) {
         return iSeatRepository.findAllSeatBookedInTheater(theater);
     }
+
+    @Override
+    public List<Seat> findAllSeatBookingId(String bookingId) {
+        return iSeatRepository.findAllSeatBookingId(bookingId);
+    }
 }

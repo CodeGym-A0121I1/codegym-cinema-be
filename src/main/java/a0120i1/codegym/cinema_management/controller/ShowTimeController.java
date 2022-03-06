@@ -41,5 +41,11 @@ public class ShowTimeController {
         List<Seat> seatList = seatService.findAllSeatBookedInTheater(theaterId);
         return new ResponseEntity<>(seatList, HttpStatus.OK);
     }
+    //get all seat thei idboooking
+    @GetMapping("/seat/{bookingId}")
+    public ResponseEntity<List<Seat>> findAllSeatBookingId(@PathVariable("bookingId") String bookingId) {
+        List<Seat> seatList = seatService.findAllSeatBookingId(bookingId);
+        return new ResponseEntity<>(seatList, HttpStatus.OK);
+    }
 
 }

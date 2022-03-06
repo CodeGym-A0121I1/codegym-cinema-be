@@ -1,6 +1,9 @@
 package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.Ticket;
+import a0120i1.codegym.cinema_management.model.movie.Movie;
+import a0120i1.codegym.cinema_management.model.theater.Seat;
+import a0120i1.codegym.cinema_management.service.IMovieService;
 import a0120i1.codegym.cinema_management.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -33,5 +37,24 @@ public class TicketController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Ticket> createMovie(@RequestBody Ticket ticket) {
+        Ticket ticket1 = ticketService.save(ticket);
+        return new ResponseEntity<>(ticket1, HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/ticket/{id}")
+    public ResponseEntity<Ticket> detailmovie(@PathVariable("id") String id) {
+        Optional<Ticket> ticket = ticketService.getById(id);
+        return ticket.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/ticket1/{bookingId}")
+    public ResponseEntity<List<Ticket>> ticketByBookingIdangSeartName(@PathVariable String bookingId) {
+        List<Ticket> ticket = ticketService.ticketByBookingIdangSeartName(bookingId);
+        return new ResponseEntity<>(ticket, HttpStatus.OK);
     }
 }

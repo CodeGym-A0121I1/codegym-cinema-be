@@ -10,4 +10,5 @@ import java.util.List;
 public interface ISeatService {
     List<Seat> findAllByTheaterID(String theaterId);
     List<Seat> findAllSeatBookedInTheater( String theater);
+    List<Seat> findAllSeatBookingId(String bookingId);
 }

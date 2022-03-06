@@ -39,21 +39,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/home").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
-                .antMatchers("/api/admin").hasRole("ADMIN")
-                .antMatchers("/api/user").hasRole("USER")
-                .antMatchers("/api/employee").hasRole("EMPLOYEE")
-                .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.authorizeRequests().anyRequest().permitAll();
     }
-
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/api/home").permitAll()
+//                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+//                .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
+//                .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
+//                .antMatchers("/api/admin").hasRole("ADMIN")
+//                .antMatchers("/api/user").hasRole("USER")
+//                .antMatchers("/api/employee").hasRole("EMPLOYEE")
+//                .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT,"/api/booking/edit").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//    }
 }

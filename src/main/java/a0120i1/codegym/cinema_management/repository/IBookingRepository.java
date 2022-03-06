@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.repository;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
+import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,6 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or b.showTime.movie.name like %:search% " +
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
+
+
 }

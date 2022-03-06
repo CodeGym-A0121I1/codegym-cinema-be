@@ -58,12 +58,12 @@ public class MovieController {
         }
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.OK);
     }
-
     @PostMapping("/create")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         Movie newMovie = movieService.save(movie);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Movie> detailmovie(@PathVariable("id") String id) {
         Optional<Movie> movie = movieService.getById(id);
