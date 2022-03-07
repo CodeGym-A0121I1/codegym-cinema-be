@@ -15,4 +15,6 @@ public interface IMovieService extends IService<Movie, String> {
     List<Genre> getAllGenres();
 
     List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date);
+
+    List<Movie> findAllByNameAndGenre(String name, int genre);
 }
