@@ -1,4 +1,4 @@
-package a0120i1.codegym.cinema_management.dto;
+package a0120i1.codegym.cinema_management.dto.login;
 
 import a0120i1.codegym.cinema_management.dto.login.AccountLoginDTO;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package a0120i1.codegym.cinema_management.dto;
+package a0120i1.codegym.cinema_management.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChangePasswordRequest {
+public class ForgotPassword {
     private String username;
-    private String oldPassword;
     private String newPassword;
+    private String otp;
 }
