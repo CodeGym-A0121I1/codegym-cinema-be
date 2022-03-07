@@ -42,7 +42,7 @@ public class UserController {
 
     }
 
-    @PutMapping
+    @PutMapping("/update/{id}")
     public ResponseEntity<User> updateMember(@RequestBody User user) {
         Optional<User> currentUser = userService.getById(user.getId());
         if (!currentUser.isPresent()) {
