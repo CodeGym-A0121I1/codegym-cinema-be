@@ -27,6 +27,11 @@ public class MovieService implements IMovieService {
     }
 
     @Override
+    public List<Movie> findAllByNameAndGenre(String name, int genre) {
+        return iMovieRepository.findAllByNameContainsAndGenre(name, genre);
+    }
+
+    @Override
     public List<Movie> getAll() {
         return iMovieRepository.findAll();
     }

@@ -34,7 +34,7 @@ public class MovieDTO {
 
     private LocalDate endDay;
 
-    private LocalTime duration;
+    private Integer duration;
 
     private ETypeTheater type;
 

@@ -28,10 +28,16 @@ public class MovieController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<MovieDTO>> getAllMovie(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<MovieDTO>> getAllMovie(@RequestParam(required = false) String name, @RequestParam(required = false) Integer genre) {
         List<Movie> movieList = new ArrayList<>();
         if (name != null) {
-            movieList = movieService.getAllMovieByName(name);
+            if (genre != null){
+                if (genre == 0){
+                    movieList = movieService.getAllMovieByName(name);
+                }else {
+                    movieList = movieService.findAllByNameAndGenre(name, genre);
+                }
+            }
         } else {
             movieList = movieService.getAll();
         }
