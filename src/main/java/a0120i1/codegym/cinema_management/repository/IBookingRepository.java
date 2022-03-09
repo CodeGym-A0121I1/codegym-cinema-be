@@ -19,4 +19,16 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or b.showTime.movie.name like %:search% " +
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
+
+    @Query(value = "SELECT SUM(total_price) " +
+            "FROM booking " +
+            "WHERE user_id = :userId " +
+            "ORDER BY SUM(total_price) DESC;", nativeQuery = true)
+    Double sumPriceByUserId(@Param("userId") String userId);
+
+    @Query(value = "SELECT SUM(quantity) " +
+            "FROM booking " +
+            "WHERE user_id = :userId " +
+            "ORDER BY SUM(quantity) DESC;", nativeQuery = true)
+    Integer countQuantity(@Param("userId") String userId);
 }
