@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -52,17 +50,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/users/register").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
-                .antMatchers( HttpMethod.GET,"/api/movie").permitAll()
-                .antMatchers( HttpMethod.GET,"/api/movie/genre").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/movie").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/movie/genre").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/movie/all").hasRole("ADMIN")
-                .antMatchers("/api/employees").hasRole("ADMIN")
-                .antMatchers("/api/employees").hasRole("MANAGEMENT")
                 .antMatchers(HttpMethod.PUT,"/api/ticket/**").hasAnyRole("ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.GET,"/api/ticket/**").hasAnyRole("ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.GET,"/api/booking").permitAll()
                 .antMatchers(HttpMethod.GET,"api/booking/total-money").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/booking/**").hasAnyRole("ADMIN","EMPLOYEE")
                 .antMatchers(HttpMethod.GET,"/api/booking/search").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET, "/api/employees").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/employees/id").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/employees").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

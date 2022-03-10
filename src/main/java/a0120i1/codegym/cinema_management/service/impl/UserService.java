@@ -4,6 +4,7 @@ import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IUserRepository;
 import a0120i1.codegym.cinema_management.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IUserRepository userRepository;
@@ -27,6 +31,7 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User user) {
+        user.getAccount().setPassword(passwordEncoder.encode(user.getAccount().getPassword()));
         return this.userRepository.save(user);
     }
 
