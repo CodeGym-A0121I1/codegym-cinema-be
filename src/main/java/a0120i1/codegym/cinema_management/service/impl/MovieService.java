@@ -1,6 +1,8 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
+import a0120i1.codegym.cinema_management.model.movie.Genre;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
+import a0120i1.codegym.cinema_management.repository.IGenreRepository;
 import a0120i1.codegym.cinema_management.repository.IMovieRepository;
 import a0120i1.codegym.cinema_management.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,17 @@ public class MovieService implements IMovieService {
     @Autowired
     private IMovieRepository iMovieRepository;
 
+    @Autowired
+    private IGenreRepository genreRepository;
+
     @Override
     public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
         return iMovieRepository.findByDate(date);
+    }
+
+    @Override
+    public List<Movie> findAllByNameAndGenre(String name, int genre) {
+        return iMovieRepository.findAllByNameContainsAndGenre(name, genre);
     }
 
     @Override
@@ -41,5 +51,15 @@ public class MovieService implements IMovieService {
     @Override
     public void deleteById(String id) {
         iMovieRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Movie> getAllMovieByName(String name) {
+        return iMovieRepository.findAllByNameContains(name);
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return genreRepository.findAll();
     }
 }

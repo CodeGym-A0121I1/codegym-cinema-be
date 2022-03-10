@@ -1,5 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
+import a0120i1.codegym.cinema_management.dto.user.ForgotPassword;
 import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.User;
@@ -32,8 +33,6 @@ public class UserController {
 
     @Autowired
     private OtpService otpService;
-
-    private String otp;
 
     @PostMapping("/register")
     public User register(@RequestBody User user) {
@@ -80,42 +79,38 @@ public class UserController {
 
         Optional<Account> accountOptional = this.accountService.getById(username);
 
-        //return:
-        // true -> ok
-        // false -> Account locked
-        // null -> Username not exists
-
         return accountOptional.map(account -> {
             if (account.getEnable()) {
-                this.otp = this.otpService.generateOTP();
-                try {
-                    this.accountService.sendOtpToEmail("votrungtrongqn99@gmail.com", otp);
-
-                } catch (Exception e) {
-                    throw e;
+                String otp = this.otpService.generateOTP(username);
+                boolean isSendOtp = this.accountService.sendOtpToEmail(account.getUser().getEmail(), otp);
+                if (isSendOtp) {
+                    return new ResponseEntity<>(true, HttpStatus.OK);// Send mail success
+                } else  {
+                    return new ResponseEntity<>(false, HttpStatus.OK);  // Send mail fail
                 }
-                return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(false, HttpStatus.OK);
+                return new ResponseEntity<>(true, HttpStatus.BAD_REQUEST);  // Account locked
             }
-        }).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.OK));
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST)); // Username not exists
     }
 
-    @GetMapping("account/forgot-password/{username}/{newPassword}/{otp}")
-    public ResponseEntity<Boolean> forgotPassword(@PathVariable("username") String username,
-                                                  @PathVariable("newPassword") String newPassword,
-                                                  @PathVariable("otp") String otp) {
-        Optional<Account> accountOptional = this.accountService.getById(username);
+    @PostMapping("account/forgot-password")
+    public ResponseEntity<Boolean> forgotPassword(@RequestBody ForgotPassword forgotPassword) {
+
+        Optional<Account> accountOptional = this.accountService.getById(forgotPassword.getUsername());
 
         return accountOptional.map(account -> {
-            if (otp.equals(this.otp)) {
-                account.setPassword(this.passwordEncoder.encode(newPassword));
+            String otpServer = this.otpService.getOtp(forgotPassword.getUsername());
+            if (forgotPassword.getOtp().equals(otpServer)) {
+                account.setPassword(this.passwordEncoder.encode(forgotPassword.getNewPassword()));
                 this.accountService.save(account);
-                return new ResponseEntity<>(true, HttpStatus.OK);
+                this.otpService.clearOTP(forgotPassword.getUsername());
+                return new ResponseEntity<>(true, HttpStatus.OK); // Success
             } else {
-                return new ResponseEntity<>(false, HttpStatus.OK);
+                return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST); // OTP fail
             }
-        }).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.OK));
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST)); // username not exists
+
     }
 
 }
