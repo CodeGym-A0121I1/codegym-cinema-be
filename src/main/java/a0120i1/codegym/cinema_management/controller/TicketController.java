@@ -1,9 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.Ticket;
-import a0120i1.codegym.cinema_management.model.movie.Movie;
-import a0120i1.codegym.cinema_management.model.theater.Seat;
-import a0120i1.codegym.cinema_management.service.IMovieService;
 import a0120i1.codegym.cinema_management.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
