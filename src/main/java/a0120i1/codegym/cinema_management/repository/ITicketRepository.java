@@ -18,6 +18,4 @@ public interface ITicketRepository extends JpaRepository<Ticket, String> {
             " join booking b on b.id = ticket.booking_id where ticket.booking_id= 'B2'", nativeQuery = true)
     List<Ticket> ticketByBookingIdangSeartName(@Param("idbooking") String idbooking);
 
-    @Query(value = "UPDATE booking SET paid = true WHERE id = :idbooking", nativeQuery = true)
-    Ticket updatepaidticket(@Param("idbooking") String idbooking);
 }

@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
+import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import a0120i1.codegym.cinema_management.service.IBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,5 +44,20 @@ public class BookingController {
         System.out.println(search);
         List<Booking> bookingList = bookingService.findBy(search);
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
+    }
+//     cập nhật trang thái booking
+
+    //    như cập nhật trạng thái vé
+    @PutMapping("{idbooking}")
+    public ResponseEntity<Boolean> updatepraid(@PathVariable("idbooking") String idbooking) {
+        List<Booking> bookingList = bookingService.updatepaidbooking(idbooking);
+        if (!bookingList.isEmpty()) {
+            bookingList.stream().forEach(value -> {
+                value.setPaid(true);
+                bookingService.save(value);
+            });
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package a0120i1.codegym.cinema_management.repository;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
+import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +22,7 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
 
+    @Query(value = "UPDATE booking SET paid = true WHERE id = :idbooking", nativeQuery = true)
+    List<Booking> updatepaidbooking(@Param("idbooking") String idbooking);
 
 }

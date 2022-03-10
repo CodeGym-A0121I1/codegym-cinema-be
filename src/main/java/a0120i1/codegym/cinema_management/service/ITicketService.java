@@ -12,6 +12,5 @@ public interface ITicketService extends IService<Ticket, String> {
 
     List<Ticket> ticketByBookingIdangSeartName(String idbooking);
 
-    Ticket updatepaidticket(String idbooking);
 
 }

@@ -38,4 +38,10 @@ public class BookingService implements IBookingService {
     public List<Booking> findBy(String search) {
         return bookingRepository.findBy(search);
     }
+
+    @Override
+    public   List<Booking>  updatepaidbooking(String idbooking) {
+        return bookingRepository.updatepaidbooking(idbooking);
+    }
+
 }

@@ -46,4 +46,5 @@ public class TicketService implements ITicketService {
     public List<Ticket> ticketByBookingIdangSeartName(String idbooking) {
         return ticketRepository.ticketByBookingIdangSeartName(idbooking);
     }
+
 }
