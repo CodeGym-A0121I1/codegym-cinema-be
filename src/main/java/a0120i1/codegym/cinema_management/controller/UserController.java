@@ -26,7 +26,7 @@ public class UserController {
 
     @GetMapping("/list-member")
     public ResponseEntity<List<User>> getAllMember() {
-        List<User> ListMember = userService.getAll();
+        List<User> ListMember = userService.getAllMember();
         if (ListMember.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

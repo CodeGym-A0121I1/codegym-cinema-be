@@ -48,4 +48,11 @@ public class UserService implements IUserService {
     public User getByUsername(String username) {
         return this.userRepository.findByAccount_Username(username);
     }
+
+    @Override
+    public List<User> getAllMember() {
+        return this.userRepository.getAllMember();
+    }
+
+
 }
