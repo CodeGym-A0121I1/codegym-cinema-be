@@ -19,4 +19,10 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or b.showTime.movie.name like %:search% " +
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
+
+    @Query(value="select * from booking " +
+            "inner join ticket t on booking.id = t.booking_id " +
+            "where status = false " +
+            "group by booking_id;", nativeQuery = true)
+    List<Booking> listBookingByFalse();
 }
