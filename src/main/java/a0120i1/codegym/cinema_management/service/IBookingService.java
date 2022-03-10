@@ -9,5 +9,8 @@ import java.util.List;
 @Service
 public interface IBookingService extends IService<Booking, String> {
     List<Booking> findBy(String search);
+
+    List<Booking> listBookingByFalse();
+
     List<StatisticMemberDTO> statisticTopMemberByTotalPrice();
 }

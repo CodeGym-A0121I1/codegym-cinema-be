@@ -20,6 +20,12 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
 
+    @Query(value = "select * from booking " +
+            "inner join ticket t on booking.id = t.booking_id " +
+            "where status = false " +
+            "group by booking_id;", nativeQuery = true)
+    List<Booking> listBookingByFalse();
+
     @Query(value = "SELECT SUM(total_price) " +
             "FROM booking " +
             "WHERE user_id = :userId " +
