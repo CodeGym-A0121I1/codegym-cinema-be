@@ -14,12 +14,10 @@ public class TicketService implements ITicketService {
     @Autowired
     private ITicketRepository ticketRepository;
 
-
     @Override
     public List<Ticket> getAll() {
         return ticketRepository.findAll();
     }
-
 
     @Override
     public Optional<Ticket> getById(String id) {
@@ -28,7 +26,6 @@ public class TicketService implements ITicketService {
 
     @Override
     public Ticket save(Ticket entity) {
-
         return ticketRepository.save(entity);
     }
 
@@ -47,4 +44,9 @@ public class TicketService implements ITicketService {
         return ticketRepository.ticketByBookingIdangSeartName(idbooking);
     }
 
+
+    @Override
+    public float bookingToTalMoney(String id) {
+        return ticketRepository.bookingToTalMoney(id);
+    }
 }

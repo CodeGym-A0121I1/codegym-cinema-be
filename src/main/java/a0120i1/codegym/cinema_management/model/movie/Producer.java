@@ -24,6 +24,8 @@ public class Producer {
 
     private String name;
 
+    private String image;
+
     @ManyToMany(mappedBy = "producerList")
     @JsonIgnore
     private List<Movie> movieList;

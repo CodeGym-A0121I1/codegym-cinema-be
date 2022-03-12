@@ -24,7 +24,7 @@ public class BeanConfig {
     }
 
     @Bean
-    public JavaMailSender getMailSender() {
+    public JavaMailSender javaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
         // host & port of GOOGLE
@@ -38,7 +38,7 @@ public class BeanConfig {
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
         javaMailProperties.put("mail.smtp.auth", "true");
         javaMailProperties.put("mail.transport.protocol", "smtp");
-        javaMailProperties.put("mail.debug", "true");
+        javaMailProperties.put("mail.debug", "false");
 
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;

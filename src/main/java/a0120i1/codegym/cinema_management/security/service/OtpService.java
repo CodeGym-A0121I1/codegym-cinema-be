@@ -1,11 +1,16 @@
 package a0120i1.codegym.cinema_management.security.service;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.stereotype.Service;
+
+import com.google.common.cache.LoadingCache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+
+@Service
 public class OtpService {
 
     //cache based on username and OPT MAX 5
@@ -24,11 +29,11 @@ public class OtpService {
 
     //This method is used to push the opt number against Key. Rewrite the OTP if it exists
     //Using user id  as key
-//    public String generateOTP(String username) {
-//        String otp = RandomStringUtils.randomAlphabetic(6);
-//        otpCache.put(username, otp);
-//        return otp;
-//    }
+    public String generateOTP(String username) {
+        String otp = RandomStringUtils.randomAlphabetic(6);
+        otpCache.put(username, otp);
+        return otp;
+    }
 
     //This method is used to return the OPT number against Key->Key values is username
     public String getOtp(String username) {
@@ -44,3 +49,6 @@ public class OtpService {
         otpCache.invalidate(username);
     }
 }
+
+
+
