@@ -7,9 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -35,4 +37,5 @@ public class Seat {
     @OneToMany(mappedBy = "seat")
     @JsonIgnore
     private List<Ticket> ticketList;
+
 }
