@@ -18,4 +18,6 @@ public interface IBookingService extends IService<Booking, String> {
 
     List<Booking> ByBooking(@Param("id") String id);
 
+    Boolean sendMail(Booking booking);
+
 }

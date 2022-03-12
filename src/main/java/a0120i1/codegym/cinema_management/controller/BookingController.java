@@ -44,15 +44,6 @@ public class BookingController {
     public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
         System.out.println(booking);
         System.out.println("test xem sao"); // uk test được chưa :v
-
-        //send mail
-
-//        if (booking == null) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-
-
-
         return ResponseEntity.ok(bookingService.save(booking));
     }
 
@@ -75,6 +66,15 @@ public class BookingController {
         if (!bookings.isEmpty()) {
             bookings.stream().forEach(value -> {
                 value.setPaid(true);
+
+                // chỗ này gửi mail trước rồi lưu. nếu gửi mail sai thì không cho lưu
+                Boolean x = this.bookingService.sendMail(bookings.get(1));
+                if (x) {
+//                     đúng thì vào đây
+                } else {
+//                     sai thì vào đây
+                }
+
                 bookingService.save(value);
             });
             return new ResponseEntity<>(true, HttpStatus.OK);
