@@ -59,7 +59,7 @@ public class BookingController {
     }
 
     // cập nhật trạng thái của booking
-    @PutMapping("{id}")
+    @PutMapping("{id}/status")
     public ResponseEntity<Boolean> updatebookong(@PathVariable("id") String id) {
 
         Booking booking = bookingService.ByBooking(id);

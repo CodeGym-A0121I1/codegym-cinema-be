@@ -57,7 +57,7 @@ public class TicketController {
     }
 
     @GetMapping(value = "/ticket/{id}")
-    public ResponseEntity<Ticket> detailmovie(@PathVariable("id") String id) {
+    public ResponseEntity<Ticket> detailticket(@PathVariable("id") String id) {
         Optional<Ticket> ticket = ticketService.getById(id);
         return ticket.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
