@@ -11,6 +11,6 @@ import java.util.List;
 public interface IBookingService extends IService<Booking, String> {
     List<Booking> findBy(String search);
 
-    List<Booking> ByBooking(@Param("id") String id);
+    Booking ByBooking(@Param("id") String id);
 
 }

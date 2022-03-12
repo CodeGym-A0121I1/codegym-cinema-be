@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class SeatService implements ISeatService {
     @Autowired
@@ -24,5 +26,10 @@ public class SeatService implements ISeatService {
     @Override
     public List<Seat> findAllSeatBookingId(String bookingId) {
         return iSeatRepository.findAllSeatBookingId(bookingId);
+    }
+
+    @Override
+    public Optional<Seat> findIdByName(String name) {
+        return iSeatRepository.findIdByName(name);
     }
 }

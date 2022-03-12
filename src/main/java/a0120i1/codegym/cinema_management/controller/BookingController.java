@@ -47,16 +47,11 @@ public class BookingController {
     }
 
     // cập nhật trạng thái của booking
-    @PutMapping("{id}")
-    public ResponseEntity<Boolean> updatebookong(@PathVariable("id") String id) {
-        List<Booking> bookings = bookingService.ByBooking(id);
-        if (!bookings.isEmpty()) {
-            bookings.stream().forEach(value -> {
-                value.setPaid(true);
-                bookingService.save(value);
-            });
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(false, HttpStatus.OK);
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Booking> updatebooking(@PathVariable("id") String id) {
+        Booking booking = bookingService.ByBooking(id);
+        booking.setPaid(true);
+        bookingService.save(booking);
+        return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 }

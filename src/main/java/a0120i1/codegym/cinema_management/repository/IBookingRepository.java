@@ -1,8 +1,6 @@
 package a0120i1.codegym.cinema_management.repository;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
-import a0120i1.codegym.cinema_management.model.booking.ShowTime;
-import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +21,5 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
     List<Booking> findBy(@Param("search") String search);
 
     @Query("select t from Booking as t where t.id = :id")
-    List<Booking> ByBooking(@Param("id") String id);
-
+    Booking ByBooking(@Param("id") String id);
 }

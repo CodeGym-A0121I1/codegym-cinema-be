@@ -40,7 +40,7 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public List<Booking> ByBooking(String id) {
+    public Booking ByBooking(String id) {
         return bookingRepository.ByBooking(id);
     }
 
