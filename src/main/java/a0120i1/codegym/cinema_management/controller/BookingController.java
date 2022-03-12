@@ -1,7 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.booking.Booking;
-import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import a0120i1.codegym.cinema_management.service.IBookingService;
 import a0120i1.codegym.cinema_management.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,16 @@ public class BookingController {
     @PostMapping("/create")
     public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
         System.out.println(booking);
-        System.out.println("test xem sao");
+        System.out.println("test xem sao"); // uk test được chưa :v
+
+        //send mail
+
+//        if (booking == null) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+
+
+
         return ResponseEntity.ok(bookingService.save(booking));
     }
 

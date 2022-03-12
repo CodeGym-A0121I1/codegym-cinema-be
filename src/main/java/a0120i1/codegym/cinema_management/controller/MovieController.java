@@ -37,10 +37,10 @@ public class MovieController {
     public ResponseEntity<List<MovieDTO>> getAllMovie(@RequestParam(required = false) String name, @RequestParam(required = false) Integer genre) {
         List<Movie> movieList = new ArrayList<>();
         if (name != null) {
-            if (genre != null){
-                if (genre == 0){
+            if (genre != null) {
+                if (genre == 0) {
                     movieList = movieService.getAllMovieByName(name);
-                }else {
+                } else {
                     movieList = movieService.findAllByNameAndGenre(name, genre);
                 }
             }
@@ -71,7 +71,7 @@ public class MovieController {
     }
 
     @GetMapping("/genre")
-    public ResponseEntity<List<Genre>> getAllGenres(){
+    public ResponseEntity<List<Genre>> getAllGenres() {
         return ResponseEntity.ok(movieService.getAllGenres());
     }
 
@@ -90,12 +90,11 @@ public class MovieController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Movie> deleteMovie(@PathVariable String id){
+    public ResponseEntity<Movie> deleteMovie(@PathVariable String id) {
         Optional<Movie> movie = movieService.getById(id);
-        if (!movie.isPresent()){
+        if (!movie.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
+        } else {
             movieService.deleteById(id);
             return new ResponseEntity<>(movie.get(), HttpStatus.OK);
         }
@@ -125,7 +124,7 @@ public class MovieController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Movie>> getAll() {
-        List<Movie> movieList= movieService.getAll();
-        return new ResponseEntity<>(movieList,HttpStatus.OK);
+        List<Movie> movieList = movieService.getAll();
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 }
