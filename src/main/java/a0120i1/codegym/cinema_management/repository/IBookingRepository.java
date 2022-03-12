@@ -39,6 +39,6 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
     Integer countQuantity(@Param("userId") String userId);
 
     @Query("select t from Booking as t where t.id = :id")
-    List<Booking> ByBooking(@Param("id") String id);
+    Booking ByBooking(@Param("id") String id);
 
 }

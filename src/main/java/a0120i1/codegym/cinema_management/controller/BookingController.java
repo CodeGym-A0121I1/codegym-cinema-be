@@ -42,10 +42,9 @@ public class BookingController {
     //  thêm mới booking
     @PostMapping("/create")
     public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
-        System.out.println(booking);
-        System.out.println("test xem sao"); // uk test được chưa :v
         return ResponseEntity.ok(bookingService.save(booking));
     }
+
 
     @GetMapping("search")
     public ResponseEntity<List<Booking>> findBy(@RequestParam("search") String search) {
@@ -62,23 +61,18 @@ public class BookingController {
     // cập nhật trạng thái của booking
     @PutMapping("{id}")
     public ResponseEntity<Boolean> updatebookong(@PathVariable("id") String id) {
-        List<Booking> bookings = bookingService.ByBooking(id);
-        if (!bookings.isEmpty()) {
-            bookings.stream().forEach(value -> {
-                value.setPaid(true);
 
-                // chỗ này gửi mail trước rồi lưu. nếu gửi mail sai thì không cho lưu
-                Boolean x = this.bookingService.sendMail(bookings.get(1));
-                if (x) {
+        Booking booking = bookingService.ByBooking(id);
+        booking.setPaid(true);
+
+        // chỗ này gửi mail trước rồi lưu. nếu gửi mail sai thì không cho lưu
+        Boolean x = this.bookingService.sendMail(booking);
+        if (x) {
 //                     đúng thì vào đây
-                } else {
+        } else {
 //                     sai thì vào đây
-                }
-
-                bookingService.save(value);
-            });
-            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        return new ResponseEntity<>(false, HttpStatus.OK);
+        bookingService.save(booking);
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }
