@@ -12,5 +12,5 @@ public interface ITicketService extends IService<Ticket, String> {
 
     List<Ticket> ticketByBookingIdangSeartName(String idbooking);
 
-
+    float bookingToTalMoney(String id);
 }

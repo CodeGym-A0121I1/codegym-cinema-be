@@ -113,6 +113,25 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
         <!-- https://jmaven.com/maven/com.paypal.sdk/paypal-android-sdk -->
         <dependency>
             <groupId>com.paypal.sdk</groupId>
@@ -145,4 +164,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
