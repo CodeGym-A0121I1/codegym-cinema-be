@@ -22,7 +22,7 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "or substring(b.date,1,10) like %:search%")
     List<Booking> findBy(@Param("search") String search);
 
-    @Query(value = "UPDATE booking SET paid = true WHERE id = :idbooking", nativeQuery = true)
-    List<Booking> updatepaidbooking(@Param("idbooking") String idbooking);
+    @Query("select t from Booking as t where t.id = :id")
+    List<Booking> ByBooking(@Param("id") String id);
 
 }

@@ -40,8 +40,9 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public   List<Booking>  updatepaidbooking(String idbooking) {
-        return bookingRepository.updatepaidbooking(idbooking);
+    public List<Booking> ByBooking(String id) {
+        return bookingRepository.ByBooking(id);
     }
+
 
 }

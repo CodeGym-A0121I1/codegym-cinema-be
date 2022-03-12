@@ -45,14 +45,13 @@ public class BookingController {
         List<Booking> bookingList = bookingService.findBy(search);
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
-//     cập nhật trang thái booking
 
-    //    như cập nhật trạng thái vé
-    @PutMapping("{idbooking}")
-    public ResponseEntity<Boolean> updatepraid(@PathVariable("idbooking") String idbooking) {
-        List<Booking> bookingList = bookingService.updatepaidbooking(idbooking);
-        if (!bookingList.isEmpty()) {
-            bookingList.stream().forEach(value -> {
+    // cập nhật trạng thái của booking
+    @PutMapping("{id}")
+    public ResponseEntity<Boolean> updatebookong(@PathVariable("id") String id) {
+        List<Booking> bookings = bookingService.ByBooking(id);
+        if (!bookings.isEmpty()) {
+            bookings.stream().forEach(value -> {
                 value.setPaid(true);
                 bookingService.save(value);
             });
