@@ -116,7 +116,7 @@ public class MovieController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Movie> detailmovie(@PathVariable("id") String id) {
+    public ResponseEntity<Movie> detailMovie(@PathVariable("id") String id) {
         Optional<Movie> movie = movieService.getById(id);
         return movie.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));

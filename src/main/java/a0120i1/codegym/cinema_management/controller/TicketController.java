@@ -41,10 +41,12 @@ public class TicketController {
         return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Ticket> createMovie(@RequestBody Ticket ticket) {
-        Ticket ticket1 = ticketService.save(ticket);
-        return new ResponseEntity<>(ticket1, HttpStatus.CREATED);
+    @PostMapping("")
+    public ResponseEntity<Ticket> createMovie(@RequestBody List<Ticket> tickets) {
+        for (Ticket ticket : tickets) {
+            Ticket ticket1 = ticketService.save(ticket);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/seat/{name}")
@@ -63,9 +65,9 @@ public class TicketController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/ticket1/{bookingId}")
-    public ResponseEntity<List<Ticket>> ticketByBookingIdangSeartName(@PathVariable String bookingId) {
-        List<Ticket> ticket = ticketService.ticketByBookingIdangSeartName(bookingId);
+    @GetMapping("/booking/{bookingId}")
+    public ResponseEntity<List<Ticket>> findTicketsByBookingId(@PathVariable String bookingId) {
+        List<Ticket> ticket = ticketService.findTicketsByBookingId(bookingId);
         return new ResponseEntity<>(ticket, HttpStatus.OK);
     }
 

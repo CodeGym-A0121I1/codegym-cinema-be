@@ -56,6 +56,4 @@ public class ShowTimeController {
         List<ShowTime> showTimes = showTimeService.findShowTimeByMovie_IdAndTheater_Id(MovieId, TheaterId);
         return showTimes.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(showTimes, HttpStatus.OK);
     }
-
-
 }

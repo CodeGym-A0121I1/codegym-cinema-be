@@ -40,7 +40,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<Ticket> ticketByBookingIdangSeartName(String idbooking) {
+    public List<Ticket> findTicketsByBookingId(String idbooking) {
         return ticketRepository.ticketByBookingIdangSeartName(idbooking);
     }
 

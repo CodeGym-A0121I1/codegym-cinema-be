@@ -79,18 +79,19 @@ public class BookingService implements IBookingService {
 
     @Override
     public Boolean sendMail(Booking booking) {
-
-        // Mặc định email gửi sẽ là mail anh
         try {
             MimeMessage message = this.javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
             helper.setTo(booking.getUser().getEmail()); // email muốn gửi tới
-            helper.setSubject("Tiêu đề");  /// Tiêu để // sửa
-            helper.setText("<h3>Xin chào ! </h3>" +
-                    "<p>    xxxx  xxx   </p>" + booking.getUser().getFullName() +
-                    "<p> Như test booking send mail </p>" +
-                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>", true
+            helper.setSubject("Thông Tin Vé xem phim");  /// Tiêu để // sửa
+            helper.setText("<h3>Xin chào ! </h3>" + booking.getUser().getFullName() +
+                    "<p>Thông tin vé xem pham của bạn như sau:   </p>" + booking.getUser().getFullName() +
+                    "<p> Id Vé:  </p>" + booking.getId() +
+                    "<p>Mã QR: </p>" +
+                    "<p> số lượng vé : </p>" + booking.getQuantity() +
+                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>",
+                    true
             ); // định dạng mail theo HTML
             this.javaMailSender.send(message);
             System.out.println("Send OTP to mail success !!!"); // in ra để xem mail đã được gửi chưa
