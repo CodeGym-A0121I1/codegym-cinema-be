@@ -16,7 +16,7 @@ public class TicketService implements ITicketService {
 
     @Override
     public List<Ticket> getAll() {
-        return null;
+        return ticketRepository.findAll();
     }
 
     @Override
@@ -35,7 +35,18 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public List<Ticket> ticketByBooking(String id){
+    public List<Ticket> ticketByBooking(String id) {
         return ticketRepository.ticketByBooking(id);
+    }
+
+    @Override
+    public List<Ticket> findTicketsByBookingId(String idbooking) {
+        return ticketRepository.ticketByBookingIdangSeartName(idbooking);
+    }
+
+
+    @Override
+    public float bookingToTalMoney(String id) {
+        return ticketRepository.bookingToTalMoney(id);
     }
 }

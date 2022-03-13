@@ -1,6 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
-import a0120i1.codegym.cinema_management.dto.UserLoginDTO;
+import a0120i1.codegym.cinema_management.dto.login.UserLoginDTO;
 import a0120i1.codegym.cinema_management.dto.login.AuthenticationRequest;
 import a0120i1.codegym.cinema_management.dto.login.AuthenticationResponse;
 import a0120i1.codegym.cinema_management.dto.login.TokenDTO;
@@ -8,6 +8,7 @@ import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.Provider;
 import a0120i1.codegym.cinema_management.model.user.User;
+import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
 import a0120i1.codegym.cinema_management.security.util.JwtUtil;
 import a0120i1.codegym.cinema_management.service.IAccountService;
@@ -23,10 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.ExpiredAuthorizationException;
 import org.springframework.social.InvalidAuthorizationException;
+import org.springframework.social.RevokedAuthorizationException;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -66,28 +70,38 @@ public class HomeController {
     // My client ID Google in website: https://console.developers.google.com/
     private final String googleClientId = "1046534921769-0ce6sb6v97gen0mbqpgc3ct9vil3h078.apps.googleusercontent.com";
 
+
+    @Autowired
+    private IAccountRepository accountRepository;
+
     @GetMapping("home")
     public String hello() {
+        System.out.printf(accountRepository.findById("thi").orElse(null).toString());
         return "Welcome to the Project Cinema-Management of class A0120I1";
     }
 
+    // Test
     @GetMapping("user")
     public String user() {
-        return ("Welcome USER");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); // get username logged
+        return ("Welcome " + name + " : role user");
     }
 
+    // Test
     @GetMapping("admin")
     public String admin() {
         return ("Welcome ADMIN");
     }
 
+    // Test
     @GetMapping("employee")
     public String management() {
         return ("Welcome EMPLOYEE");
     }
 
     // parameter : username+password
-    // true -> OK -> return: token + User
+    // true -> OK -> return: token + User + status
     // false -> username+password ( fail or account locked ) -> return : ERROR
     private ResponseEntity<AuthenticationResponse> login(AuthenticationRequest authenticationRequest) {
         String jwt = null;
@@ -104,32 +118,27 @@ public class HomeController {
             status = "Success";
             httpStatus = HttpStatus.OK;
         } catch (DisabledException disabledException) {
-            // Catch Var enable = false
             status = "Account locked";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (BadCredentialsException badCredentialsException) {
-            // Catch username & password exists in database
             status = "Wrong password";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
             status = "Username not exists";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (Exception exception) {
+            // Cat error xxx ->
             status = "Error server";
             httpStatus = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(new AuthenticationResponse(jwt, userLoginDto, status), httpStatus);
     }
 
-    // Check username exitsts,
-    // true -> get user
-    // false -> save user
-    // call login (user.username, passwordSocial)
-    private ResponseEntity<AuthenticationResponse> loginSocial(String email, String fullName, String image, Provider provider) {
+    private ResponseEntity<AuthenticationResponse> loginSocial(String username, String email, String fullName, String image, Provider provider) {
         User user = new User();
         Account account = new Account();
 
-        account.setUsername(email);
+        account.setUsername(username);
         account.setPassword(this.passwordEncoder.encode(this.passwordSocial));
         account.setRole(ERole.ROLE_USER);
         account.setEnable(true);
@@ -140,13 +149,14 @@ public class HomeController {
         user.setImage(image);
         user.setProvider(provider);
 
-        if (this.accountService.isUsernameExists(email)) {
-            user = this.userService.getByUsername(email);
+        if (this.accountService.existsByUsername(username)) {
+            user = this.userService.getByUsername(username);
         } else {
             user = this.userService.save(user);
         }
 
         return login(new AuthenticationRequest(user.getAccount().getUsername(), this.passwordSocial));
+        // call method login(AuthenticationRequest(username, passwordSocial) )
     }
 
 
@@ -168,11 +178,12 @@ public class HomeController {
             final GoogleIdToken.Payload payload = googleIdToken.getPayload(); // data user
 
             String email = payload.getEmail();
+            String username = "GOOGLE" + email;
             String fullName = payload.get("name").toString();
             String image = payload.get("picture").toString();
             Provider provider = Provider.GOOGLE;
 
-            return loginSocial(email, fullName, image, provider);
+            return loginSocial(username, email, fullName, image, provider);
         } catch (JsonParseException | BaseEncoding.DecodingException | IllegalArgumentException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
@@ -193,20 +204,22 @@ public class HomeController {
             org.springframework.social.facebook.api.User userFacebook = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, data);
 
             String email = userFacebook.getEmail();
+            String username = "FACEBOOK" + email;
             String fullName = userFacebook.getName();
             // get url image for Object LinkedHashmap (extra,picture,data)
             String image = ((LinkedHashMap) ((LinkedHashMap) userFacebook.getExtraData().get("picture")).get("data")).get("url").toString();
             Provider provider = Provider.FACEBOOK;
 
-            return loginSocial(email, fullName, image, provider);
+            return loginSocial(username, email, fullName, image, provider);
         } catch (InvalidAuthorizationException invalid) {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
             status = "Token expires";
+        } catch (RevokedAuthorizationException revoked) {
+            status = "Token revoked authorization"; // error: logout account Facebook
         } catch (Exception e) {
             status = "Error server";
         }
         return new ResponseEntity<>(new AuthenticationResponse(null, null, status), HttpStatus.BAD_REQUEST);
     }
-
 }
