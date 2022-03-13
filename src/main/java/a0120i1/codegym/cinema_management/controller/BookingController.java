@@ -64,15 +64,15 @@ public class BookingController {
 
         Booking booking = bookingService.ByBooking(id);
         booking.setPaid(true);
-
-        // chỗ này gửi mail trước rồi lưu. nếu gửi mail sai thì không cho lưu
+        System.out.println("68");
+        System.out.println((booking.getUser().getEmail()));
         Boolean x = this.bookingService.sendMail(booking);
         if (x) {
-//                     đúng thì vào đây
+            bookingService.save(booking);
         } else {
-//                     sai thì vào đây
+            System.out.println("emial sai rồi kìa!");
         }
-        bookingService.save(booking);
+
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

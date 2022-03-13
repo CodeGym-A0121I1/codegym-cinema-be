@@ -42,9 +42,11 @@ public class TicketController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Ticket> createMovie(@RequestBody Ticket ticket) {
-        Ticket ticket1 = ticketService.save(ticket);
-        return new ResponseEntity<>(ticket1, HttpStatus.CREATED);
+    public ResponseEntity<Ticket> createMovie(@RequestBody List<Ticket> tickets) {
+        for (Ticket ticket : tickets) {
+            Ticket ticket1 = ticketService.save(ticket);
+        }
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/seat/{name}")
