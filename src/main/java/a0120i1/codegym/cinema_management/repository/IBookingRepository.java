@@ -40,8 +40,4 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "WHERE user_id = :userId " +
             "ORDER BY SUM(quantity) DESC;", nativeQuery = true)
     Integer countQuantity(@Param("userId") String userId);
-
-    @Query("select t from Booking as t where t.id = :id")
-    Booking ByBooking(@Param("id") String id);
-
 }

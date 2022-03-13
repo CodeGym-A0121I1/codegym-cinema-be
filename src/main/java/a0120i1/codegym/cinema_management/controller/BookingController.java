@@ -61,18 +61,18 @@ public class BookingController {
     // cập nhật trạng thái của booking
     @PutMapping("{id}/status")
     public ResponseEntity<Boolean> updateBooking(@PathVariable("id") String id) {
-
-        Booking booking = bookingService.ByBooking(id);
+        Booking booking = bookingService.getById(id).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         booking.setPaid(true);
-        System.out.println("68");
-        System.out.println((booking.getUser().getEmail()));
         Boolean x = this.bookingService.sendMail(booking);
         if (x) {
             bookingService.save(booking);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
             System.out.println("emial sai rồi kìa!");
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

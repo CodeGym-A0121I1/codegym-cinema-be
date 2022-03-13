@@ -31,14 +31,14 @@ public class BeanConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         // get username & password (password of application in GoogleManagement) of admin or me
-        mailSender.setUsername("quynhnhuctcn@gmail.com");
-        mailSender.setPassword("faardpohubboxomt");
+        mailSender.setUsername("trungtrongcr21@gmail.com");
+        mailSender.setPassword("ejxtbmcjvswzgiak");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
         javaMailProperties.put("mail.smtp.auth", "true");
         javaMailProperties.put("mail.transport.protocol", "smtp");
-        javaMailProperties.put("mail.debug", "false");
+        javaMailProperties.put("mail.debug", "true");
 
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;

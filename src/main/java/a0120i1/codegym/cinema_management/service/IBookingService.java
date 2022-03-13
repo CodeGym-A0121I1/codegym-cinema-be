@@ -16,8 +16,6 @@ public interface IBookingService extends IService<Booking, String> {
 
     List<StatisticMemberDTO> statisticTopMemberByTotalPrice();
 
-    Booking ByBooking(@Param("id") String id);
-
     Boolean sendMail(Booking booking);
 
 }
