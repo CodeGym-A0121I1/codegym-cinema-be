@@ -41,7 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
@@ -51,7 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/employee").hasRole("EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/api/movie/create").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/movie/edit").hasRole("ADMIN")
-
                 .antMatchers("/api/home").permitAll() // test TrongVT
                 .antMatchers("/api/admin").hasRole("ADMIN") // test TrongVT
                 .antMatchers("/api/user").hasRole("USER") // test TrongVT
@@ -66,7 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/movie/**").permitAll() // NhuPTQ
                 .antMatchers(HttpMethod.GET, "/api/movie/genre").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/seats/**").permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/movie/all").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/ticket/**").hasAnyRole("ADMIN", "USER", "EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/api/ticket/create").hasAnyRole("ADMIN", "USER", "EMPLOYEE") //.NhuPTQ
                 .antMatchers(HttpMethod.GET, "/api/ticket/**").hasAnyRole("ADMIN", "USER", "EMPLOYEE")
@@ -83,7 +80,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/employees").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/employees/id").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/employees").hasRole("ADMIN")
-
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
