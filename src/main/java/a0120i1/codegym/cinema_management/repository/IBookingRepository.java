@@ -11,13 +11,16 @@ import java.util.List;
 @Repository
 public interface IBookingRepository extends JpaRepository<Booking, String> {
     @Query("select b from Booking as b " +
-            "where b.id like %:search% " +
+            "inner join Ticket as t on b.id = t.booking.id " +
+            "where (b.id like %:search% " +
             "or b.user.id like %:search% " +
             "or b.user.fullName like  %:search% " +
             "or b.user.idCard like %:search% " +
             "or b.user.phoneNumber like %:search% " +
             "or b.showTime.movie.name like %:search% " +
-            "or substring(b.date,1,10) like %:search%")
+            "or substring(b.date,1,10) like %:search%) " +
+            "and t.status = false " +
+            "group by b.id")
     List<Booking> findBy(@Param("search") String search);
 
     @Query(value = "select * from booking " +

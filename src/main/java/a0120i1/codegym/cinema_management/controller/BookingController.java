@@ -26,7 +26,7 @@ public class BookingController {
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
-    @GetMapping("list")
+    @GetMapping("/status/false")
     public ResponseEntity<List<Booking>> listBookingByFalse() {
         List<Booking> bookingList = bookingService.listBookingByFalse();
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);

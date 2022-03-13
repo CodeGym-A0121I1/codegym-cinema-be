@@ -8,6 +8,7 @@ import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.Provider;
 import a0120i1.codegym.cinema_management.model.user.User;
+import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
 import a0120i1.codegym.cinema_management.security.util.JwtUtil;
 import a0120i1.codegym.cinema_management.service.IAccountService;
@@ -69,9 +70,13 @@ public class HomeController {
     // My client ID Google in website: https://console.developers.google.com/
     private final String googleClientId = "1046534921769-0ce6sb6v97gen0mbqpgc3ct9vil3h078.apps.googleusercontent.com";
 
-    // Test
+
+    @Autowired
+    private IAccountRepository accountRepository;
+
     @GetMapping("home")
     public String hello() {
+        System.out.printf(accountRepository.findById("thi").orElse(null).toString());
         return "Welcome to the Project Cinema-Management of class A0120I1";
     }
 
