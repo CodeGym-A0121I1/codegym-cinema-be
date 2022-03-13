@@ -24,6 +24,8 @@ public class Director {
 
     private String name;
 
+    private String image;
+
     @ManyToMany(mappedBy = "directorList")
     @JsonIgnore
     private List<Movie> movieList;

@@ -26,6 +26,12 @@ public class BookingController {
         return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
+    @GetMapping("list")
+    public ResponseEntity<List<Booking>> listBookingByFalse() {
+        List<Booking> bookingList = bookingService.listBookingByFalse();
+        return bookingList.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(bookingList, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Booking> ticketReceipt(@PathVariable("id") String id) {
         Optional<Booking> booking = bookingService.getById(id);

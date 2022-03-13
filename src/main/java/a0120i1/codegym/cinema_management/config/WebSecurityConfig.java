@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll();
         http.csrf().disable()
                 .authorizeRequests()
+
                 .antMatchers("/api/home").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
@@ -51,6 +52,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/employee").hasRole("EMPLOYEE")
                 .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
+
+                .antMatchers("/api/home").permitAll() // test TrongVT
+                .antMatchers("/api/admin").hasRole("ADMIN") // test TrongVT
+                .antMatchers("/api/user").hasRole("USER") // test TrongVT
+                .antMatchers("/api/employee").hasRole("EMPLOYEE") // test TrongVT
+                .antMatchers(HttpMethod.POST, "/api/login/**").permitAll() // TrongVT
+                .antMatchers(HttpMethod.GET,"/api/users/account/generate/**").permitAll() // TrongVT
+                .antMatchers(HttpMethod.POST,"/api/users/account/forgot-password").permitAll() // TrongVT
+                .antMatchers(HttpMethod.PUT,"/api/users/account/password").hasAnyRole("USER","ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/movie/create").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/movie/edit").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/movie").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/movie/genre").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/movie/all").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/ticket/**").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/api/ticket/**").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/api/booking").permitAll()
+                .antMatchers(HttpMethod.GET,"api/booking/total-money").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/booking/list").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/api/booking/**").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/api/booking/search").hasAnyRole("ADMIN","EMPLOYEE")
+                .antMatchers(HttpMethod.GET, "/api/employees").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/employees/id").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/employees").hasRole("ADMIN")
+
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
