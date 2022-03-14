@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ShowTimeService implements IShowTimeService {
     @Autowired
@@ -15,5 +17,25 @@ public class ShowTimeService implements IShowTimeService {
     @Override
     public List<ShowTime> listShowTimeByMovieID(String id) {
         return showTimeRepository.findShowTimeByMovie_Id(id);
+    }
+
+    @Override
+    public List<ShowTime> getAll() {
+        return showTimeRepository.findAll();
+    }
+
+    @Override
+    public Optional<ShowTime> getById(String id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public ShowTime save(ShowTime entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(String id) {
+
     }
 }
