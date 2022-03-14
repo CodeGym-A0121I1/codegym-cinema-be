@@ -66,12 +66,11 @@ public class BookingController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         booking.setPaid(true);
-        Boolean x = this.bookingService.sendMail(booking);
-        if (x) {
+        Boolean isSendMail = this.bookingService.sendMail(booking);
+        if (isSendMail) {
             bookingService.save(booking);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
-            System.out.println("emial sai rồi kìa!");
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
     }

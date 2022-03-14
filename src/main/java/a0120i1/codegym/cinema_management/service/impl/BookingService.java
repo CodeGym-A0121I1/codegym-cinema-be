@@ -81,21 +81,18 @@ public class BookingService implements IBookingService {
 
             helper.setTo("trungtrongcr21@gmail.com"); // email muốn gửi tới
             helper.setSubject("Thông Tin Vé xem phim");  /// Tiêu để // sửa
-//            helper.setText("<h3>Xin chào ! </h3>" + booking.getUser().getFullName() +
-//                    "<p>Thông tin vé xem pham của bạn như sau:   </p>" + booking.getUser().getFullName() +
-//                    "<p> Id Vé:  </p>" + booking.getId() +
-//                    "<p>Mã QR: </p>" +
-//                    "<p> số lượng vé : </p>" + booking.getQuantity() +
-//                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>",
-//                    true
-//            ); // định dạng mail theo HTML
-            helper.setSubject("Thông tin ve phi,");
+            helper.setText("<h3>Xin chào ! </h3>" + booking.getUser().getFullName() +
+                    "<p>Thông tin vé xem pham của bạn như sau:   </p>" + booking.getUser().getFullName() +
+                    "<p> Id Vé:  </p>" + booking.getId() +
+                    "<p>Mã QR: </p>" +
+                    "<p> số lượng vé : </p>" + booking.getQuantity() +
+                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>",
+                    true
+            ); // định dạng mail theo HTML
             this.javaMailSender.send(message);
             System.out.println("Send OTP to mail success !!!"); // in ra để xem mail đã được gửi chưa
             return true;
-        } catch (Exception e) {
-            // Nếu xảy ra bất kỳ lỗi gì trong khi gửi mail thì trẻ về false ( vd: sai email or lỗi .......)
-            System.out.println(e.toString());
+        } catch (Exception e) {// Nếu xảy ra bất kỳ lỗi gì trong khi gửi mail thì trẻ về false ( vd: sai email or lỗi .......)
             return false;
         }
     }
