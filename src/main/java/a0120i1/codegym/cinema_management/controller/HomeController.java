@@ -8,6 +8,7 @@ import a0120i1.codegym.cinema_management.model.user.Account;
 import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.Provider;
 import a0120i1.codegym.cinema_management.model.user.User;
+import a0120i1.codegym.cinema_management.repository.IAccountRepository;
 import a0120i1.codegym.cinema_management.security.service.MyUserDetailsService;
 import a0120i1.codegym.cinema_management.security.util.JwtUtil;
 import a0120i1.codegym.cinema_management.service.IAccountService;
@@ -23,10 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.ExpiredAuthorizationException;
 import org.springframework.social.InvalidAuthorizationException;
+import org.springframework.social.RevokedAuthorizationException;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -66,28 +70,38 @@ public class HomeController {
     // My client ID Google in website: https://console.developers.google.com/
     private final String googleClientId = "1046534921769-0ce6sb6v97gen0mbqpgc3ct9vil3h078.apps.googleusercontent.com";
 
+
+    @Autowired
+    private IAccountRepository accountRepository;
+
     @GetMapping("home")
     public String hello() {
+        System.out.printf(accountRepository.findById("thi").orElse(null).toString());
         return "Welcome to the Project Cinema-Management of class A0120I1";
     }
 
+    // Test
     @GetMapping("user")
     public String user() {
-        return ("Welcome USER");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); // get username logged
+        return ("Welcome " + name + " : role user");
     }
 
+    // Test
     @GetMapping("admin")
     public String admin() {
         return ("Welcome ADMIN");
     }
 
+    // Test
     @GetMapping("employee")
     public String management() {
         return ("Welcome EMPLOYEE");
     }
 
     // parameter : username+password
-    // true -> OK -> return: token + User
+    // true -> OK -> return: token + User + status
     // false -> username+password ( fail or account locked ) -> return : ERROR
     private ResponseEntity<AuthenticationResponse> login(AuthenticationRequest authenticationRequest) {
         String jwt = null;
@@ -104,27 +118,22 @@ public class HomeController {
             status = "Success";
             httpStatus = HttpStatus.OK;
         } catch (DisabledException disabledException) {
-            // Catch Var enable = false
             status = "Account locked";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (BadCredentialsException badCredentialsException) {
-            // Catch username & password exists in database
             status = "Wrong password";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
             status = "Username not exists";
             httpStatus = HttpStatus.BAD_REQUEST;
         } catch (Exception exception) {
+            // Cat error xxx ->
             status = "Error server";
             httpStatus = HttpStatus.BAD_REQUEST;
         }
         return new ResponseEntity<>(new AuthenticationResponse(jwt, userLoginDto, status), httpStatus);
     }
 
-    // Check username exitsts,
-    // true -> get user
-    // false -> save user
-    // call login (user.username, passwordSocial)
     private ResponseEntity<AuthenticationResponse> loginSocial(String username, String email, String fullName, String image, Provider provider) {
         User user = new User();
         Account account = new Account();
@@ -147,6 +156,7 @@ public class HomeController {
         }
 
         return login(new AuthenticationRequest(user.getAccount().getUsername(), this.passwordSocial));
+        // call method login(AuthenticationRequest(username, passwordSocial) )
     }
 
 
@@ -205,6 +215,8 @@ public class HomeController {
             status = "Token invalid";
         } catch (ExpiredAuthorizationException expiredAuthorizationException) {
             status = "Token expires";
+        } catch (RevokedAuthorizationException revoked) {
+            status = "Token revoked authorization"; // error: logout account Facebook
         } catch (Exception e) {
             status = "Error server";
         }

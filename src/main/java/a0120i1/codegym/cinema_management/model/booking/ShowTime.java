@@ -39,4 +39,17 @@ public class ShowTime {
     private Movie movie;
     @ManyToOne
     private Theater theater;
+
+    @Override
+    public String toString() {
+        return "ShowTime{" +
+                "id='" + id + '\'' +
+                ", startTime=" + startTime +
+                ", startDate=" + startDate +
+                ", price=" + price +
+                ", bookingList=" + bookingList +
+                ", movie=" + movie +
+                ", theater=" + theater +
+                '}';
+    }
 }

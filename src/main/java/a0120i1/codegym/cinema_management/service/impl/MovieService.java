@@ -1,8 +1,11 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
-import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.movie.*;
 import a0120i1.codegym.cinema_management.repository.*;
+import a0120i1.codegym.cinema_management.model.movie.Genre;
+import a0120i1.codegym.cinema_management.model.movie.Movie;
+import a0120i1.codegym.cinema_management.repository.IGenreRepository;
+import a0120i1.codegym.cinema_management.repository.IMovieRepository;
 import a0120i1.codegym.cinema_management.service.IMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,14 +35,12 @@ public class MovieService implements IMovieService {
     @Autowired
     private IDirectorRepository directorRepository ;
 
+    @Autowired
+    private IGenreRepository genreRepository;
+
     @Override
     public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
         return iMovieRepository.findByDate(date);
-    }
-
-    @Override
-    public List<Genre> getAllGenre() {
-        return genreRepository.findAll();
     }
 
     @Override
@@ -58,6 +59,11 @@ public class MovieService implements IMovieService {
     }
 
     @Override
+    public List<Movie> findAllByNameAndGenre(String name, int genre) {
+        return iMovieRepository.findAllByNameContainsAndGenre(name, genre);
+    }
+
+    @Override
     public List<Movie> getAll() {
         return iMovieRepository.findAll();
     }
@@ -71,16 +77,21 @@ public class MovieService implements IMovieService {
 
     @Override
     public Movie save(Movie movie) {
-//        List<ShowTime> showTimeList = movie.getShowTimeList();
-//        for (ShowTime showTime : showTimeList) {
-//            this.showTimeRepository.save(showTime);
-//        }
-//        movie.setShowTimeList(showTimeList);
         return iMovieRepository.save(movie);
     }
 
     @Override
     public void deleteById(String id) {
         iMovieRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Movie> getAllMovieByName(String name) {
+        return iMovieRepository.findAllByNameContains(name);
+    }
+
+    @Override
+    public List<Genre> getAllGenres() {
+        return genreRepository.findAll();
     }
 }
