@@ -45,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/google").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/login/facebook").permitAll()
+                .antMatchers("/api/showTime").permitAll()
+                .antMatchers("/api/showTime/booked").permitAll()
                 .antMatchers("/api/admin").hasRole("ADMIN")
                 .antMatchers("/api/user").hasRole("USER")
                 .antMatchers("/api/employee").hasRole("EMPLOYEE")

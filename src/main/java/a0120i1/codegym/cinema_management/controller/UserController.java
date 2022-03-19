@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin
@@ -30,6 +31,7 @@ public class UserController {
         this.userService = userService;
         this.accountService = accountService;
     }
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -73,7 +75,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("account/generate/{username}")
     public ResponseEntity<Boolean> generateOtp(@PathVariable("username") String username) {
 
@@ -85,7 +86,7 @@ public class UserController {
                 boolean isSendOtp = this.accountService.sendOtpToEmail(account.getUser().getEmail(), otp);
                 if (isSendOtp) {
                     return new ResponseEntity<>(true, HttpStatus.OK);// Send mail success
-                } else  {
+                } else {
                     return new ResponseEntity<>(false, HttpStatus.OK);  // Send mail fail
                 }
             } else {
@@ -112,6 +113,4 @@ public class UserController {
         }).orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST)); // username not exists
 
     }
-
-
 }
