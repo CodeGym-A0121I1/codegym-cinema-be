@@ -42,11 +42,6 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Boolean isUsernameExists(String username) {
-        return this.accountRepository.existsByUsername(username);
-    }
-
-    @Override
     public boolean changePassword(ChangePasswordRequest changePasswordRequest) {
         Optional<Account> accountOptional = this.getById(changePasswordRequest.getUsername());
         return accountOptional.map(account -> {
@@ -61,7 +56,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public Boolean existsByUsername(String username) {
-        return null;
+        return this.accountRepository.existsByUsername(username);
     }
 
     @Override
