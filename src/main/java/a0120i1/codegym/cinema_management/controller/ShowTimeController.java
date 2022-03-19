@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/seats")
+@RequestMapping("/api/showTime")
 public class ShowTimeController {
 
     @Autowired
@@ -23,14 +23,14 @@ public class ShowTimeController {
     private ISeatService seatService;
 
     //get list ShowTime by Movie Id
-    @GetMapping("/showTime")
+    @GetMapping()
     public ResponseEntity<List<ShowTime>> getShowTimeByMovieId(@RequestParam("MovieId") String movieId) {
         List<ShowTime> showTimes = showTimeService.listShowTimeByMovieID(movieId);
         return showTimes.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(showTimes, HttpStatus.OK);
     }
 
     //get all seat in theater by theaterId
-    @GetMapping
+    @GetMapping("/seats")
     public ResponseEntity<List<Seat>> getAllSeatByTheaterId(@RequestParam("theaterId") String theaterId) {
         List<Seat> seatList = seatService.findAllByTheaterID(theaterId);
         return new ResponseEntity<>(seatList, HttpStatus.OK);
