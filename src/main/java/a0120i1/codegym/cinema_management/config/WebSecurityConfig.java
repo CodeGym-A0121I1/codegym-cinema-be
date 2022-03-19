@@ -69,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/ticket/**").hasAnyRole("ADMIN", "USER", "EMPLOYEE")
                 .antMatchers(HttpMethod.POST, "/api/ticket/create").hasAnyRole("ADMIN", "USER", "EMPLOYEE") //.NhuPTQ
                 .antMatchers(HttpMethod.GET, "/api/ticket/**").hasAnyRole("ADMIN", "USER", "EMPLOYEE")
+                .antMatchers(HttpMethod.GET, "/api/showTime/**").hasRole( "USER")
                 .antMatchers(HttpMethod.GET, "/api/booking").permitAll()
                 .antMatchers(HttpMethod.GET, "api/booking/total-money").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/booking/list").hasAnyRole("ADMIN", "EMPLOYEE")
@@ -77,7 +78,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/api/booking/**").hasRole("USER")  // NhuPTQ
                 .antMatchers(HttpMethod.POST, "/api/booking/**").hasRole("USER") // NhuPTQ
                 .antMatchers(HttpMethod.GET, "/api/booking/status/false").hasAnyRole("ADMIN", "EMPLOYEE")
-                .antMatchers(HttpMethod.GET, "/api/booking/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers(HttpMethod.GET, "/api/booking/search").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers(HttpMethod.GET, "/api/employees").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/employees/id").hasRole("ADMIN")
