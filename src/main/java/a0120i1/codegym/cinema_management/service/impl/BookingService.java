@@ -79,7 +79,7 @@ public class BookingService implements IBookingService {
             MimeMessage message = this.javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            helper.setTo("trungtrongcr21@gmail.com"); // email muốn gửi tới
+            helper.setTo(booking.getUser().getEmail()); // email muốn gửi tới
             helper.setSubject("Thông Tin Vé xem phim");  /// Tiêu để // sửa
             helper.setText("<h3>Xin chào ! </h3>" + booking.getUser().getFullName() +
                     "<p>Thông tin vé xem pham của bạn như sau:   </p>" + booking.getUser().getFullName() +
