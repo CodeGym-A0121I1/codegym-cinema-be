@@ -43,4 +43,17 @@ public class ShowTimeController {
         return new ResponseEntity<>(seatList, HttpStatus.OK);
     }
 
+    //get all seat thei idboooking
+    @GetMapping("/seat/{bookingId}")
+    public ResponseEntity<List<Seat>> findAllSeatBookingId(@PathVariable("bookingId") String bookingId) {
+        List<Seat> seatList = seatService.findAllSeatBookingId(bookingId);
+        return new ResponseEntity<>(seatList, HttpStatus.OK);
+    }
+
+    //    get list ShowTime by Movie Id and theaterId
+    @GetMapping("/showmovietheater")
+    public ResponseEntity<List<ShowTime>> getShowTimeByMovieIdandTheaterId(@RequestParam("MovieId") String MovieId, @RequestParam("TheaterId") String TheaterId) {
+        List<ShowTime> showTimes = showTimeService.findShowTimeByMovie_IdAndTheater_Id(MovieId, TheaterId);
+        return showTimes.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(showTimes, HttpStatus.OK);
+    }
 }

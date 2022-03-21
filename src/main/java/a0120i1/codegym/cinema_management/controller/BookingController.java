@@ -40,12 +40,11 @@ public class BookingController {
     }
 
     //  thêm mới booking
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
-        System.out.println(booking);
-        System.out.println("test xem sao");
         return ResponseEntity.ok(bookingService.save(booking));
     }
+
 
     @GetMapping("search")
     public ResponseEntity<List<Booking>> findBy(@RequestParam("search") String search) {
@@ -57,5 +56,22 @@ public class BookingController {
     public ResponseEntity<Float> bookingTotal(@PathVariable("id") String id) {
         float total = ticketService.bookingToTalMoney(id);
         return new ResponseEntity<>(total, HttpStatus.OK);
+    }
+
+    // cập nhật trạng thái của booking
+    @PutMapping("{id}/status")
+    public ResponseEntity<Boolean> updateBooking(@PathVariable("id") String id) {
+        Booking booking = bookingService.getById(id).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        booking.setPaid(true);
+        Boolean isSendMail = this.bookingService.sendMail(booking);
+        if (isSendMail) {
+            bookingService.save(booking);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
 import a0120i1.codegym.cinema_management.model.user.User;
-import a0120i1.codegym.cinema_management.service.IAccountService;
 import a0120i1.codegym.cinema_management.service.IUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,8 @@ public class EmployeeController {
 
     private final IUserService userService;
 
-    private final IAccountService accountService;
-
-    public EmployeeController(IUserService userService, IAccountService accountService) {
+    public EmployeeController(IUserService userService) {
         this.userService = userService;
-        this.accountService = accountService;
     }
 
     @GetMapping
