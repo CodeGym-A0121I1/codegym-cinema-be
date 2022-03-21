@@ -78,10 +78,10 @@ public class MovieController {
         return movieDTO;
     }
 
-    @GetMapping("/genre")
-    public ResponseEntity<List<Genre>> getAllGenres(){
-        return ResponseEntity.ok(movieService.getAllGenres());
-    }
+//    @GetMapping("/genre")
+//    public ResponseEntity<List<Genre>> getAllGenres(){
+//        return ResponseEntity.ok(movieService.getAllGenres());
+//    }
 
     @GetMapping("/date")
     public ResponseEntity<List<Movie>> getMovieByDateSelected(@RequestParam("date") String date) {
@@ -137,7 +137,7 @@ public class MovieController {
 
     @GetMapping("/genre")
     public ResponseEntity<List<Genre>> getAllGenre() {
-        List<Genre> genreList = movieService.getAllGenre();
+        List<Genre> genreList = movieService.getAllGenres();
         return new ResponseEntity<>(genreList, HttpStatus.OK);
     }
 
@@ -157,7 +157,7 @@ public class MovieController {
     public ResponseEntity<List<Producer>> getAllProducer() {
         List<Producer> producerList = movieService.getAllProducer();
         return new ResponseEntity<>(producerList, HttpStatus.OK);
-
+    }
 
     @GetMapping("/theater")
     public ResponseEntity<List<TheaterDTO>> getAllTheater() {

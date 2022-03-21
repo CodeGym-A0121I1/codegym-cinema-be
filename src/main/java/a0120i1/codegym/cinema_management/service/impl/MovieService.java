@@ -35,8 +35,6 @@ public class MovieService implements IMovieService {
     @Autowired
     private IDirectorRepository directorRepository ;
 
-    @Autowired
-    private IGenreRepository genreRepository;
 
     @Override
     public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {

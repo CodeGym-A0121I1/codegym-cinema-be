@@ -53,20 +53,8 @@ public class ShowTimeService implements IShowTimeService {
         return showTimeRepository.findAll();
     }
 
-    @Override
-    public Optional<ShowTime> getById(String id) {
-        return Optional.empty();
-    }
 
-    @Override
-    public ShowTime save(ShowTime entity) {
-        return null;
-    }
 
-    @Override
-    public void deleteById(String id) {
-
-    }
 
     @Override
     public List<StatisticMovieDTO> statisticTopHighestGrossingMovie() {
