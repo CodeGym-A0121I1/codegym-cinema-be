@@ -162,4 +162,40 @@ public class MovieController {
         List<Producer> producerList = movieService.getAllProducer();
         return new ResponseEntity<>(producerList, HttpStatus.OK);
     }
+
+    @GetMapping("/theater")
+    public ResponseEntity<List<TheaterDTO>> getAllTheater() {
+        List<Theater> theaterList = theaterService.getAll();
+
+        List<TheaterDTO> theaterDTOList = new ArrayList<>();
+
+        for (Theater theater : theaterList) {
+            TheaterDTO theaterDTO = new TheaterDTO();
+
+            theaterDTO.setId(theater.getId());
+            theaterDTO.setName(theater.getName());
+
+            theaterDTOList.add(theaterDTO);
+        }
+
+        return new ResponseEntity<>(theaterDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/showtime")
+    public ResponseEntity<List<ShowTimeDTO>> getAllShowTime() {
+        List<ShowTime> showTimeList = showTimeService.getAll();
+
+        List<ShowTimeDTO> showTimeDTOList = new ArrayList<>();
+
+        for (ShowTime showTime : showTimeList) {
+            ShowTimeDTO showTimeDTO = new ShowTimeDTO();
+
+            showTimeDTO.setId(showTime.getId());
+            showTimeDTO.setStartTime(showTime.getStartTime());
+
+            showTimeDTOList.add(showTimeDTO);
+        }
+
+        return new ResponseEntity<>(showTimeDTOList, HttpStatus.OK);
+    }
 }
