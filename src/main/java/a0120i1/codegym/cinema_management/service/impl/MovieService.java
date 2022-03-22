@@ -1,5 +1,7 @@
 package a0120i1.codegym.cinema_management.service.impl;
 
+import a0120i1.codegym.cinema_management.model.movie.*;
+import a0120i1.codegym.cinema_management.repository.*;
 import a0120i1.codegym.cinema_management.model.movie.Genre;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.repository.IGenreRepository;
@@ -21,9 +23,37 @@ public class MovieService implements IMovieService {
     @Autowired
     private IGenreRepository genreRepository;
 
+    @Autowired
+    private IShowTimeRepository showTimeRepository;
+
+    @Autowired
+    private IActorRepository actorRepository ;
+
+    @Autowired
+    private IProducerRepository producerRepository ;
+
+    @Autowired
+    private IDirectorRepository directorRepository ;
+
+
     @Override
     public List<Movie> findMovieByOpeningDayBetweenAndEndDay2(LocalDate date) {
         return iMovieRepository.findByDate(date);
+    }
+
+    @Override
+    public List<Actor> getAllActor() {
+        return actorRepository.findAll();
+    }
+
+    @Override
+    public List<Director> getAllDirector() {
+        return directorRepository.findAll() ;
+    }
+
+    @Override
+    public List<Producer> getAllProducer() {
+        return producerRepository.findAll() ;
     }
 
     @Override

@@ -1,9 +1,16 @@
 package a0120i1.codegym.cinema_management.controller;
 
+import a0120i1.codegym.cinema_management.dto.movie.ShowTimeDTO;
+import a0120i1.codegym.cinema_management.dto.movie.TheaterDTO;
+import a0120i1.codegym.cinema_management.model.booking.ShowTime;
+import a0120i1.codegym.cinema_management.model.movie.*;
+import a0120i1.codegym.cinema_management.model.theater.Theater;
 import a0120i1.codegym.cinema_management.dto.movie.MovieDTO;
 import a0120i1.codegym.cinema_management.model.movie.Genre;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.service.IMovieService;
+import a0120i1.codegym.cinema_management.service.IShowTimeService;
+import a0120i1.codegym.cinema_management.service.ITheaterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +36,13 @@ public class MovieController {
 
     @Autowired
     private IMovieService movieService;
+
+    @Autowired
+    private ITheaterService theaterService;
+
+    @Autowired
+    private IShowTimeService showTimeService;
+
 
     @Autowired
     private ModelMapper modelMapper;
@@ -100,7 +114,7 @@ public class MovieController {
         }
     }
 
-    @PutMapping("/edit")
+    @PutMapping("")
     public ResponseEntity<Movie> editUser(@RequestBody Movie movie) {
         Optional<Movie> currentMovie = movieService.getById(movie.getId());
         if (!currentMovie.isPresent()) {
@@ -109,9 +123,12 @@ public class MovieController {
         return new ResponseEntity<>(movieService.save(movie), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
         Movie newMovie = movieService.save(movie);
+        if (newMovie == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 
@@ -126,5 +143,59 @@ public class MovieController {
     public ResponseEntity<List<Movie>> getAll() {
         List<Movie> movieList = movieService.getAll();
         return new ResponseEntity<>(movieList, HttpStatus.OK);
+    }
+
+    @GetMapping("/actor")
+    public ResponseEntity<List<Actor>> getAllActor() {
+        List<Actor> actorList = movieService.getAllActor();
+        return new ResponseEntity<>(actorList, HttpStatus.OK);
+    }
+
+    @GetMapping("/director")
+    public ResponseEntity<List<Director>> getAllDirector() {
+        List<Director> directorList = movieService.getAllDirector();
+        return new ResponseEntity<>(directorList, HttpStatus.OK);
+    }
+
+    @GetMapping("/producer")
+    public ResponseEntity<List<Producer>> getAllProducer() {
+        List<Producer> producerList = movieService.getAllProducer();
+        return new ResponseEntity<>(producerList, HttpStatus.OK);
+    }
+
+    @GetMapping("/theater")
+    public ResponseEntity<List<TheaterDTO>> getAllTheater() {
+        List<Theater> theaterList = theaterService.getAll();
+
+        List<TheaterDTO> theaterDTOList = new ArrayList<>();
+
+        for (Theater theater : theaterList) {
+            TheaterDTO theaterDTO = new TheaterDTO();
+
+            theaterDTO.setId(theater.getId());
+            theaterDTO.setName(theater.getName());
+
+            theaterDTOList.add(theaterDTO);
+        }
+
+        return new ResponseEntity<>(theaterDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/showtime")
+    public ResponseEntity<List<ShowTimeDTO>> getAllShowTime() {
+        List<ShowTime> showTimeList = showTimeService.getAll();
+
+        List<ShowTimeDTO> showTimeDTOList = new ArrayList<>();
+
+        for (ShowTime showTime : showTimeList) {
+            ShowTimeDTO showTimeDTO = new ShowTimeDTO();
+
+            showTimeDTO.setId(showTime.getId());
+            showTimeDTO.setStartTime(showTime.getStartTime());
+
+            showTimeDTOList.add(showTimeDTO);
+        }
+
+        return new ResponseEntity<>(showTimeDTOList, HttpStatus.OK);
     }
 }

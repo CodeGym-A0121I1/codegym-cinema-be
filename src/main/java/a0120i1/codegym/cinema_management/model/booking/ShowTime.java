@@ -5,6 +5,7 @@ import a0120i1.codegym.cinema_management.model.theater.Theater;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class ShowTime {
             strategy = "a0120i1.codegym.cinema_management.model.IdGenerator"
     )
     private String id;
+    @DateTimeFormat(pattern = "hh:mm")
     private LocalTime startTime;
     private LocalDate startDate;
     private double price;

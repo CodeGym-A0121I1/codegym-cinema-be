@@ -9,9 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -19,34 +17,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieDTO {
-
     private String id;
-
     private String name;
-
     private String poster;
-
-    private String trailer;
-
-    private String introduction;
-
+    private String trailer ;
     private LocalDate openingDay;
-
     private LocalDate endDay;
-
     private Integer duration;
-
     private ETypeTheater type;
-
     private String content;
-
-    private List<Genre> genreList;
 
     private List<Actor> actorList;
 
     private List<Director> directorList;
 
     private List<Producer> producerList;
+
+    private List<Genre> genreList;
 
     private List<ShowTimeDTO> showTimeList;
 
