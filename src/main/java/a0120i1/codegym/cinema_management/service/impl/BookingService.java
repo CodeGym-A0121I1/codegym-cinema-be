@@ -2,6 +2,7 @@ package a0120i1.codegym.cinema_management.service.impl;
 
 import a0120i1.codegym.cinema_management.dto.statistic.StatisticMemberDTO;
 import a0120i1.codegym.cinema_management.model.booking.Booking;
+import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IBookingRepository;
 import a0120i1.codegym.cinema_management.repository.IUserRepository;
@@ -12,10 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BookingService implements IBookingService {
@@ -54,9 +52,13 @@ public class BookingService implements IBookingService {
         List<User> userList = this.userRepository.findAll();
         List<StatisticMemberDTO> statisticMemberDTOList = new ArrayList<>();
         for (User user : userList) {
-            Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
-            Integer quantity = this.bookingRepository.countQuantity(user.getId());
-            statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(), user.getFullName(), quantity, totalPrice));
+            if (Objects.equals(this.bookingRepository.getRoleUser(user.getId()), ERole.ROLE_USER.name())) {
+                Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
+                Integer quantity = this.bookingRepository.countQuantity(user.getId());
+                statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(),
+                        user.getFullName(), quantity, totalPrice, totalPrice / 1000));
+            }
+
         }
         Collections.sort(statisticMemberDTOList);
         return statisticMemberDTOList;

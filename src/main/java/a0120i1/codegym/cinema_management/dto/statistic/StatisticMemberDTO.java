@@ -17,16 +17,7 @@ public class StatisticMemberDTO implements Comparable<StatisticMemberDTO> {
     private String name;
     private Integer quantity;
     private Double totalPrice;
-
-    @Override
-    public String toString() {
-        return "StatisticMemberDTO{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", totalPrice=" + totalPrice +
-                '}';
-    }
+    private Double accumulatorPoint;
 
     @Override
     public int compareTo(StatisticMemberDTO statisticMemberDTO) {

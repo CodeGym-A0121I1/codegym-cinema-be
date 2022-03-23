@@ -30,14 +30,23 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
     List<Booking> listBookingByFalse();
 
     @Query(value = "SELECT SUM(total_price) " +
-            "FROM booking " +
-            "WHERE user_id = :userId " +
+            "FROM booking b " +
+            "INNER JOIN `user` u ON b.user_id = u.id " +
+            "INNER JOIN account a ON u.account_username = a.username " +
+            "WHERE b.user_id = :userId AND role = \"ROLE_USER\"" +
             "ORDER BY SUM(total_price) DESC;", nativeQuery = true)
     Double sumPriceByUserId(@Param("userId") String userId);
 
     @Query(value = "SELECT SUM(quantity) " +
-            "FROM booking " +
-            "WHERE user_id = :userId " +
+            "FROM booking b " +
+            "INNER JOIN `user` u ON b.user_id = u.id " +
+            "INNER JOIN account a ON u.account_username = a.username " +
+            "WHERE b.user_id = :userId AND role = \"ROLE_USER\"" +
             "ORDER BY SUM(quantity) DESC;", nativeQuery = true)
     Integer countQuantity(@Param("userId") String userId);
+
+    @Query(value = "SELECT role FROM `user` u " +
+            "INNER JOIN account a ON u.account_username = a.username " +
+            "WHERE u.id = :userId", nativeQuery = true)
+    String getRoleUser(@Param("userId") String userId);
 }

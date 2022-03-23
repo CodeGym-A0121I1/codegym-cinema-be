@@ -77,6 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/booking/**").hasRole("USER") // NhuPTQ
                 .antMatchers(HttpMethod.GET, "/api/booking/status/false").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers(HttpMethod.GET, "/api/booking/search").hasAnyRole("ADMIN", "EMPLOYEE")
+                .antMatchers(HttpMethod.GET, "/api/statistic/movie").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/statistic/user").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/employees").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/employees/id").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/employees").hasRole("ADMIN")
