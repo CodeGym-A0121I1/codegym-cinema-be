@@ -125,10 +125,10 @@ public class MovieController {
 
     @PostMapping("")
     public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
-        Movie newMovie = movieService.save(movie);
-        if (newMovie == null) {
+        if (movie == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        Movie newMovie = movieService.save(movie);
         return new ResponseEntity<>(newMovie, HttpStatus.CREATED);
     }
 
