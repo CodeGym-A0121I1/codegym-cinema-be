@@ -18,15 +18,6 @@ public class StatisticMovieDTO implements Comparable<StatisticMovieDTO> {
     private Double price;
 
     @Override
-    public String toString() {
-        return "StatisticMovieDTO{" +
-                "name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
-    }
-
-    @Override
     public int compareTo(StatisticMovieDTO statisticMovieDTO) {
         if (this.price > statisticMovieDTO.getPrice()) {
             return -1;

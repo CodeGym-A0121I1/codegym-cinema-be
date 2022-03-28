@@ -1,6 +1,7 @@
 package a0120i1.codegym.cinema_management.repository;
 
 import a0120i1.codegym.cinema_management.model.booking.Ticket;
+import a0120i1.codegym.cinema_management.model.theater.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,8 @@ public interface ITicketRepository extends JpaRepository<Ticket, String> {
             "from ticket group by booking_id " +
             "having booking_id = :id", nativeQuery = true)
     float bookingToTalMoney(@Param("id") String id);
+
+    @Query(value = "select ticket.* from ticket join seat s on s.id = ticket.seat_id " +
+            " join booking b on b.id = ticket.booking_id where ticket.booking_id= 'B2'", nativeQuery = true)
+    List<Ticket> ticketByBookingIdangSeartName(@Param("idbooking") String idbooking);
 }

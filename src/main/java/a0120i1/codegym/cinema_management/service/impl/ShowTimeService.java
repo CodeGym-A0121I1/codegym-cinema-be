@@ -4,6 +4,7 @@ import a0120i1.codegym.cinema_management.dto.statistic.StatisticMovieDTO;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
 import a0120i1.codegym.cinema_management.model.movie.Movie;
 import a0120i1.codegym.cinema_management.repository.IMovieRepository;
+import a0120i1.codegym.cinema_management.model.booking.Ticket;
 import a0120i1.codegym.cinema_management.repository.IShowTimeRepository;
 import a0120i1.codegym.cinema_management.service.IShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,10 @@ import java.util.Optional;
 public class ShowTimeService implements IShowTimeService {
 
     @Autowired
-    private final IShowTimeRepository showTimeRepository;
-    @Autowired
-    private final IMovieRepository movieRepository;
+    private IShowTimeRepository showTimeRepository;
 
-    public ShowTimeService(IShowTimeRepository showTimeRepository, IMovieRepository movieRepository) {
-        this.showTimeRepository = showTimeRepository;
-        this.movieRepository = movieRepository;
-    }
+    @Autowired
+    private IMovieRepository movieRepository;
 
     public List<ShowTime> getAll() {
         return this.showTimeRepository.findAll();
@@ -49,6 +46,11 @@ public class ShowTimeService implements IShowTimeService {
     @Override
     public List<ShowTime> listShowTimeByMovieID(String id) {
         return showTimeRepository.findShowTimeByMovie_Id(id);
+    }
+
+    @Override
+    public List<ShowTime> findShowTimeByMovie_IdAndTheater_Id(String idMovie, String idTheater) {
+        return showTimeRepository.findShowTimeByMovie_IdAndTheater_Id(idMovie, idTheater);
     }
 
     @Override

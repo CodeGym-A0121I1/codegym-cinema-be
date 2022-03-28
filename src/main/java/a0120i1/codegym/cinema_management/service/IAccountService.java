@@ -7,10 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IAccountService extends IService<Account, String> {
 
-
-    Boolean isUsernameExists(String username);
-
-
     boolean changePassword(ChangePasswordRequest changePasswordRequest);
 
     Boolean existsByUsername(String username);

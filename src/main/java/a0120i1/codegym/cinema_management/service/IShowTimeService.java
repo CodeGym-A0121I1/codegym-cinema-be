@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface IShowTimeService extends IService<ShowTime, String> {
+public interface IShowTimeService extends IService<ShowTime, String>{
     List<ShowTime> listShowTimeByMovieID(String id);
     List<StatisticMovieDTO> statisticTopHighestGrossingMovie();
+    List<ShowTime> findShowTimeByMovie_IdAndTheater_Id(String idMovie, String idTheater);
 }

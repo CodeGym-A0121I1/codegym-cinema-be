@@ -2,30 +2,30 @@ package a0120i1.codegym.cinema_management.service.impl;
 
 import a0120i1.codegym.cinema_management.dto.statistic.StatisticMemberDTO;
 import a0120i1.codegym.cinema_management.model.booking.Booking;
+import a0120i1.codegym.cinema_management.model.user.ERole;
 import a0120i1.codegym.cinema_management.model.user.User;
 import a0120i1.codegym.cinema_management.repository.IBookingRepository;
 import a0120i1.codegym.cinema_management.repository.IUserRepository;
 import a0120i1.codegym.cinema_management.service.IBookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import javax.mail.internet.MimeMessage;
+import java.util.*;
 
 @Service
 public class BookingService implements IBookingService {
 
     @Autowired
-    private final IBookingRepository bookingRepository;
-    @Autowired
-    private final IUserRepository userRepository;
+    private IBookingRepository bookingRepository;
 
-    public BookingService(IBookingRepository bookingService, IUserRepository userService) {
-        this.bookingRepository = bookingService;
-        this.userRepository = userService;
-    }
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Override
     public List<Booking> getAll() {
@@ -52,9 +52,13 @@ public class BookingService implements IBookingService {
         List<User> userList = this.userRepository.findAll();
         List<StatisticMemberDTO> statisticMemberDTOList = new ArrayList<>();
         for (User user : userList) {
-            Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
-            Integer quantity = this.bookingRepository.countQuantity(user.getId());
-            statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(), user.getFullName(), quantity, totalPrice));
+            if (Objects.equals(this.bookingRepository.getRoleUser(user.getId()), ERole.ROLE_USER.name())) {
+                Double totalPrice = this.bookingRepository.sumPriceByUserId(user.getId());
+                Integer quantity = this.bookingRepository.countQuantity(user.getId());
+                statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(),
+                        user.getFullName(), quantity, totalPrice, totalPrice / 1000));
+            }
+
         }
         Collections.sort(statisticMemberDTOList);
         return statisticMemberDTOList;
@@ -69,4 +73,31 @@ public class BookingService implements IBookingService {
     public List<Booking> listBookingByFalse() {
         return bookingRepository.listBookingByFalse();
     }
+
+
+    @Override
+    public Boolean sendMail(Booking booking) {
+        try {
+            MimeMessage message = this.javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            helper.setTo(booking.getUser().getEmail()); // email muốn gửi tới
+            helper.setSubject("Thông Tin Vé xem phim");  /// Tiêu để // sửa
+            helper.setText("<h3>Xin chào ! </h3>" + booking.getUser().getFullName() +
+                    "<p>Thông tin vé xem pham của bạn như sau:   </p>" + booking.getUser().getFullName() +
+                    "<p> Id Vé:  </p>" + booking.getId() +
+                    "<p>Mã QR: </p>" +
+                    "<p> số lượng vé : </p>" + booking.getQuantity() +
+                    "<p>Link dan den trang chu: <a style='color: red; text-decoration: underline' href='http://localhost:4200'>bam vao day</a></p>",
+                    true
+            ); // định dạng mail theo HTML
+            this.javaMailSender.send(message);
+            System.out.println("Send OTP to mail success !!!"); // in ra để xem mail đã được gửi chưa
+            return true;
+        } catch (Exception e) {// Nếu xảy ra bất kỳ lỗi gì trong khi gửi mail thì trẻ về false ( vd: sai email or lỗi .......)
+            return false;
+        }
+    }
+
+
 }
