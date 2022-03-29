@@ -38,22 +38,7 @@ public class Booking {
 
     private LocalDate date;
     private LocalTime time;
-    private Integer quantity;
     private Long totalPrice;
     private Boolean paid;
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "id='" + id + '\'' +
-                ", user=" + user +
-                ", showTime=" + showTime +
-                ", ticketList=" + ticketList +
-                ", date=" + date +
-                ", time=" + time +
-                ", quantity=" + quantity +
-                ", totalPrice=" + totalPrice +
-                ", paid=" + paid +
-                '}';
-    }
 }

@@ -29,15 +29,4 @@ public interface IBookingRepository extends JpaRepository<Booking, String> {
             "group by booking_id;", nativeQuery = true)
     List<Booking> listBookingByFalse();
 
-    @Query(value = "SELECT SUM(total_price) " +
-            "FROM booking " +
-            "WHERE user_id = :userId " +
-            "ORDER BY SUM(total_price) DESC;", nativeQuery = true)
-    Double sumPriceByUserId(@Param("userId") String userId);
-
-    @Query(value = "SELECT SUM(quantity) " +
-            "FROM booking " +
-            "WHERE user_id = :userId " +
-            "ORDER BY SUM(quantity) DESC;", nativeQuery = true)
-    Integer countQuantity(@Param("userId") String userId);
 }

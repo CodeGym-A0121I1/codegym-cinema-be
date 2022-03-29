@@ -12,4 +12,8 @@ public interface IAccountRepository extends JpaRepository<Account, String> {
     @Query("select a.enable from Account a where a.username = :username")
     Boolean getEnableByUsername(@Param("username") String username);
 
+    @Query(value = "SELECT role FROM `user` u " +
+            "INNER JOIN account a ON u.account_username = a.username " +
+            "WHERE u.id = :userId AND role = \"ROLE_USER\"", nativeQuery = true)
+    String getRoleByUserId(@Param("userId") String userId);
 }
