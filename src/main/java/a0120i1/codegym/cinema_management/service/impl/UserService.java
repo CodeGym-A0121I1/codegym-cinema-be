@@ -50,5 +50,10 @@ public class UserService implements IUserService {
         return this.userRepository.getAllMember();
     }
 
+    @Override
+    public List<User> getAllEmployee() {
+        return this.userRepository.getAllEmployee();
+    }
+
 
 }

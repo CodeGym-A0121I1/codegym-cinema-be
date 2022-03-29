@@ -11,6 +11,8 @@ public interface IUserRepository extends JpaRepository<User, String> {
     @Query(value = "select * from user as u inner join account as a on u.account_username = a.username\n" +
             "where a.role = 'ROLE_USER'",nativeQuery = true)
     List<User> getAllMember();
-
+    @Query(value = "select * from user as u inner join account as a on u.account_username = a.username\n" +
+            "where a.role = 'ROLE_EMPLOYEE'",nativeQuery = true)
+    List<User> getAllEmployee();
 
 }

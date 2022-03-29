@@ -9,4 +9,5 @@ import java.util.List;
 public interface IUserService extends IService<User, String> {
     User getByUsername(String username);
     List<User> getAllMember();
+    List<User> getAllEmployee();
 }
