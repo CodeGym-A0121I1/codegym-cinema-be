@@ -12,8 +12,13 @@ import java.util.Optional;
 @Repository
 public interface ISeatRepository extends JpaRepository<Seat,String> {
     List<Seat> findAllByTheater_Id(String theaterId);
-    @Query(value = "SELECT seat.* FROM ticket join seat on seat.id= ticket.seat_id where seat.theater_id= :theaterId",nativeQuery = true)
-    List<Seat> findAllSeatBookedInTheater(@Param("theaterId") String theater);
+
+    @Query(value = "SELECT * FROM `cinema-management`.ticket\n" +
+            "inner join booking b on b.id= ticket.booking_id\n" +
+            "inner join seat s on s.id = ticket.seat_id\n" +
+            "inner join theater t on t.id=s.theater_id \n" +
+            "where s.theater_id= :theaterId and b.`time`= :timeShowTime and t.movie_id= :movieid and b.`date`= :date",nativeQuery = true)
+    List<Seat> findAllSeatBookedInTheater(@Param("theaterId") String theater,@Param("timeShowTime") String timeShowTime,@Param("movieid") String movieId,@Param("date") String date);
 
     @Query(value ="select  seat.* from seat  join ticket t on seat.id = t.seat_id\n" +
             " join booking b on t.booking_id = b.id where booking_id =:bookingId", nativeQuery = true)
