@@ -22,7 +22,7 @@ public class EmployeeController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAllEmployee() {
-        List<User> employeeList = userService.getAll();
+        List<User> employeeList = userService.getAllEmployee();
         return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
