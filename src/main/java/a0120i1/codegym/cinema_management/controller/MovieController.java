@@ -1,5 +1,6 @@
 package a0120i1.codegym.cinema_management.controller;
 
+import a0120i1.codegym.cinema_management.dto.movie.GenreDTO;
 import a0120i1.codegym.cinema_management.dto.movie.ShowTimeDTO;
 import a0120i1.codegym.cinema_management.dto.movie.TheaterDTO;
 import a0120i1.codegym.cinema_management.model.booking.ShowTime;
@@ -85,8 +86,14 @@ public class MovieController {
     }
 
     @GetMapping("/genre")
-    public ResponseEntity<List<Genre>> getAllGenres() {
-        return ResponseEntity.ok(movieService.getAllGenres());
+    public ResponseEntity<List<GenreDTO>> getAllGenres() {
+        List<Genre> genreList = movieService.getAllGenres();
+        List<GenreDTO> genreDTOList = new ArrayList<>();
+        genreDTOList = genreList.stream()
+                .map(genre -> this.modelMapper.map(genre, GenreDTO.class)).collect(Collectors.toList());
+        genreDTOList.forEach(
+                genreDTO -> genreDTO.setNumberOfMovies(genreList.get(genreDTO.getId()-1).getMovieList().size()));
+        return ResponseEntity.ok(genreDTOList);
     }
 
     @GetMapping("/date")

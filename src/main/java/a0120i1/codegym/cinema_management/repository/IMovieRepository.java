@@ -18,7 +18,7 @@ public interface IMovieRepository extends JpaRepository<Movie, String> {
 
     List<Movie> findAllByNameContains(String name);
 
-    @Query(value = "select id, content, end_day, introduction, name, opening_day, poster, trailer, type, director_id, producer_id, duration from movie as m INNER JOIN movie_genre as g ON m.id = g.movie_id " +
-            "where m.name like %:name%   and g.genre_id = :genre", nativeQuery = true)
+    @Query(value = "select id, content, end_day, content, name, opening_day, poster, trailer, type, duration from movie as m INNER JOIN movie_genre as g ON m.id = g.movie_id " +
+            "where m.name like %:name% and g.genre_id = :genre", nativeQuery = true)
     List<Movie> findAllByNameContainsAndGenre(String name, int genre);
 }

@@ -38,6 +38,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private ETypeTheater type;//version;
 
+    @Column(columnDefinition = "longtext")
     private String content;
 
     @ManyToMany(fetch = FetchType.EAGER)//many-
