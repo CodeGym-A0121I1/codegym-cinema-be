@@ -42,6 +42,7 @@ public class BookingController {
     //  thêm mới booking
     @PostMapping("")
     public ResponseEntity<Booking> createArea(@RequestBody Booking booking) {
+        booking.setDate(java.time.LocalDate.now());
         return ResponseEntity.ok(bookingService.save(booking));
     }
 
