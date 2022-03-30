@@ -71,7 +71,13 @@ public class TicketService implements ITicketService {
         List<StatisticMovieDTO> statisticMovieDTOList = new ArrayList<>();
         for (Movie movie : movieList) {
             Double price = this.ticketRepository.sumPriceByMovieId(movie.getId());
+            if (price == null) {
+                price = (double) 0;
+            }
             Integer quantity = this.ticketRepository.sumTicketQuantityByMovieId(movie.getId());
+            if (quantity == null) {
+                quantity = 0;
+            }
             statisticMovieDTOList.add(new StatisticMovieDTO(movie.getName(), quantity, price));
         }
         Collections.sort(statisticMovieDTOList);
@@ -86,8 +92,17 @@ public class TicketService implements ITicketService {
             if (Objects.equals(this.accountRepository.getRoleByUserId(user.getId()), ERole.ROLE_USER.name())) {
                 Double totalPrice = this.ticketRepository.sumPriceByUserId(user.getId());
                 Integer quantity = this.ticketRepository.sumTicketQuantityByUserId(user.getId());
-                statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(),
-                        user.getFullName(), quantity, totalPrice, totalPrice / 1000));
+                if (totalPrice == null) {
+                    totalPrice = (double) 0;
+                }
+                if (quantity == null) {
+                    quantity = 0;
+                    statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(),
+                            user.getFullName(), quantity, totalPrice, (double) 0));
+                } else {
+                    statisticMemberDTOList.add(new StatisticMemberDTO(user.getId(),
+                            user.getFullName(), quantity, totalPrice, totalPrice / 1000));
+                }
             }
         }
         Collections.sort(statisticMemberDTOList);
