@@ -10,10 +10,10 @@ import a0120i1.codegym.cinema_management.service.IShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class ShowTimeService implements IShowTimeService {
@@ -51,6 +51,11 @@ public class ShowTimeService implements IShowTimeService {
     @Override
     public List<ShowTime> findShowTimeByMovie_IdAndTheater_Id(String idMovie, String idTheater) {
         return showTimeRepository.findShowTimeByMovie_IdAndTheater_Id(idMovie, idTheater);
+    }
+
+    @Override
+    public List<ShowTime> findShowTimeByStartDateAndMovieId(String date, String movieId) {
+        return showTimeRepository.findShowTimeByStartDateAndMovieId(date,movieId);
     }
 
     @Override

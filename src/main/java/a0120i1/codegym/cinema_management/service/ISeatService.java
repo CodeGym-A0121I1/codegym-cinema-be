@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ISeatService {
     List<Seat> findAllByTheaterID(String theaterId);
 
-    List<Seat> findAllSeatBookedInTheater(String theater);
+    List<Seat> findAllSeatBookedInTheater(String theater,String time,String moiveId,String date);
 
     List<Seat> findAllSeatBookingId(String bookingId);
 

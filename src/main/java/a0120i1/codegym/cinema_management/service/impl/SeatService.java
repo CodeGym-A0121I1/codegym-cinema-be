@@ -19,8 +19,8 @@ public class SeatService implements ISeatService {
     }
 
     @Override
-    public List<Seat> findAllSeatBookedInTheater(String theater) {
-        return iSeatRepository.findAllSeatBookedInTheater(theater);
+    public List<Seat> findAllSeatBookedInTheater(String theater, String time,String movieId,String date) {
+        return iSeatRepository.findAllSeatBookedInTheater(theater,time,movieId,date);
     }
 
     @Override
