@@ -17,7 +17,8 @@ public interface ISeatRepository extends JpaRepository<Seat,String> {
             "inner join booking b on b.id= ticket.booking_id\n" +
             "inner join seat s on s.id = ticket.seat_id\n" +
             "inner join theater t on t.id=s.theater_id \n" +
-            "where s.theater_id= :theaterId and b.`time`= :timeShowTime and t.movie_id= :movieid and b.`date`= :date",nativeQuery = true)
+            "inner join show_time sh on sh.id=b.show_time_id\n" +
+            "where s.theater_id= :theaterId and sh.start_time= :timeShowTime and t.movie_id= :movieid and sh.start_date= :date", nativeQuery = true)
     List<Seat> findAllSeatBookedInTheater(@Param("theaterId") String theater,@Param("timeShowTime") String timeShowTime,@Param("movieid") String movieId,@Param("date") String date);
 
     @Query(value ="select  seat.* from seat  join ticket t on seat.id = t.seat_id\n" +
